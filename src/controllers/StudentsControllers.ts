@@ -1,19 +1,13 @@
-import { Service } from "typedi";
-import StudentServices from "../services/StudentsServices";
+import Container, { Service } from "typedi";
+import {StudentServices} from "../services/StudentsServices";
 import { NextFunction, Request, Response } from "express";
 import { reject, resolve } from "../utils/reponseService";
 import { LoginDto } from "../dto/studentDTO";
 import generateToken from "../utils/generateToken";
 
-interface ResponseInterface{
-    message: string,
-    payload?: any,
-    status?: number
-}
-
 @Service()
 class StudentsControllers{
-    constructor(private readonly studentsServices: StudentServices){
+    constructor(private readonly studentsServices = Container.get(StudentServices)){
 
     }
 
@@ -52,4 +46,25 @@ class StudentsControllers{
             reject(err.message, err.status, res)
         }
     }
+
+    async getStudentByEmail(req: Request, res: Response, next: NextFunction){
+        try{
+            let {email} = req.params;
+            let result = await this.studentsServices.getStudentByEmail(email)
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, err.status, res)
+        }
+    }
 }
+
+interface ResponseInterface{
+    message: string,
+    payload?: any,
+    status?: number
+}
+
+Container.set(StudentsControllers, new StudentsControllers(new StudentServices()))
+
+export default StudentsControllers

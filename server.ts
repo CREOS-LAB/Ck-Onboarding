@@ -1,7 +1,11 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import corsOptions from './src/config/cors';
+import Container from 'typedi';
+import StudentsControllers from './src/controllers/StudentsControllers';
+import { StudentServices } from './src/services/StudentsServices';
+
 require("dotenv").config()
 
 const app = express();
@@ -21,6 +25,15 @@ connection.once('open', ()=>{console.log('Database running Successfully')});
 app.get('/', (req, res) => {
 res.sendFile(__dirname + '/public/index.html');
 });
+
+//students route
+// const studentServices = Container.get(StudentServices)
+const studentsController = Container.get(StudentsControllers);
+app.use("/students/sign-up", (req: Request, res: Response)=>studentsController.signUp(req, res))
+app.use("/students/sign-in", (req: Request, res: Response)=>studentsController.signIn(req, res))
+app.use("/students/:id", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentById(req, res,next))
+app.use("/students/:email", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentByEmail(req, res,next))
+
       
 // Run Server
 app.listen(port, () => {

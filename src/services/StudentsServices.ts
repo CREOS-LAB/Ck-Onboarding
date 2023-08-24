@@ -6,7 +6,7 @@ import generateToken from "../utils/generateToken";
 import { Response } from "express";
 
 @Service()
-class StudentServices{
+export class StudentServices{
     constructor(private readonly student = Student){
 
     }
@@ -50,5 +50,3 @@ class StudentServices{
         return student
     }
 }
-
-export default StudentServices
