@@ -8,3 +8,8 @@ export interface StudentDto{
     dob: Date,
     password: string
 }
+
+export interface LoginDto{
+    email: string,
+    password: string
+}
