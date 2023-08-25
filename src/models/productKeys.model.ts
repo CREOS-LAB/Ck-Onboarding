@@ -2,7 +2,6 @@ import mongoose, {Schema} from "mongoose"
 
 const schema = new Schema({
     key: {type: String, require: true},
-    school: {type: Schema.Types.ObjectId, ref: "School"},
 },
 {
     timestamps: true
