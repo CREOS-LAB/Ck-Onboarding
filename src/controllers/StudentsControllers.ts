@@ -108,7 +108,7 @@ class StudentsControllers{
     }
 }
 
-interface ResponseInterface{
+export interface ResponseInterface{
     message: string,
     payload?: any,
     status?: number

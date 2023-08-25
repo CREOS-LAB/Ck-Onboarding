@@ -7,6 +7,7 @@ import StudentsControllers from './src/controllers/StudentsControllers';
 import { StudentServices } from './src/services/StudentsServices';
 import verifyAuth from './src/middlewares/verifyAuth';
 import cookieParser from "cookie-parser"
+import { SchoolsController } from './src/controllers/SchoolsController';
 
 require("dotenv").config()
 
@@ -30,17 +31,28 @@ res.sendFile(__dirname + '/public/index.html');
 });
 
 //students route
-// const studentServices = Container.get(StudentServices)
 const studentsController = Container.get(StudentsControllers);
-app.get("/students/", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.getLoggedInStudent(req, res,next))
-app.post("/students/sign-up", (req: Request, res: Response)=>studentsController.signUp(req, res))
-app.post("/students/sign-in", (req: Request, res: Response)=>studentsController.signIn(req, res))
-app.get("/students/:id", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentById(req, res,next))
-app.get("/students/email/:email", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentByEmail(req, res,next))
+app.get("/student/", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.getLoggedInStudent(req, res,next))
+app.post("/student/sign-up", (req: Request, res: Response)=>studentsController.signUp(req, res))
+app.post("/student/sign-in", (req: Request, res: Response)=>studentsController.signIn(req, res))
+app.get("/student/:id", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentById(req, res,next))
+app.get("/student/email/:email", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentByEmail(req, res,next))
 app.post("/logout", (req: Request, res: Response, next: NextFunction)=>studentsController.logout(req, res,next))
-app.patch("/students/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res,next))
+app.patch("/student/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res,next))
 app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
+
+//schools route
+const schoolController = Container.get(SchoolsController);
+app.get("/school/", verifyAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.getLoggedInSchool(req, res,next))
+app.post("/school/sign-up", (req: Request, res: Response)=>schoolController.signUp(req, res))
+app.post("/school/sign-in", (req: Request, res: Response)=>schoolController.signIn(req, res))
+app.get("/school/:id", (req: Request, res: Response, next: NextFunction)=>schoolController.getSchoolById(req, res,next))
+app.get("/school/email/:email", (req: Request, res: Response, next: NextFunction)=>schoolController.getSchoolByEmail(req, res,next))
+app.post("/logout", (req: Request, res: Response, next: NextFunction)=>schoolController.logout(req, res,next))
+app.patch("/school/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.updateSchool(req, res,next))
+app.delete("/school/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.deleteSchool(req, res,next))
       
+
 // Run Server
 app.listen(port, () => {
 console.log(`Server running on port ${port}`);
