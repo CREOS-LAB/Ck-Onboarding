@@ -37,7 +37,9 @@ app.post("/students/sign-up", (req: Request, res: Response)=>studentsController.
 app.post("/students/sign-in", (req: Request, res: Response)=>studentsController.signIn(req, res))
 app.get("/students/:id", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentById(req, res,next))
 app.get("/students/email/:email", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentByEmail(req, res,next))
-
+app.post("/logout", (req: Request, res: Response, next: NextFunction)=>studentsController.logout(req, res,next))
+app.patch("/students/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res,next))
+app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
       
 // Run Server
 app.listen(port, () => {
