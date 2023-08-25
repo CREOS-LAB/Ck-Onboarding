@@ -8,7 +8,7 @@ const schema = new Schema({
     gender: {type: String, required: true },
     email: {type: String, required: true, unique: true},
     productKey: {type:String, required: true},
-    school: {},
+    school: {type: Schema.Types.ObjectId, ref:"School"},
     password: {type: String, required: true},
     dob: {type: Date, required: false}
     },

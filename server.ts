@@ -12,7 +12,7 @@ import { SchoolsController } from './src/controllers/SchoolsController';
 require("dotenv").config()
 
 const app = express();
-const port = String(process.env.PORT) || 3030;
+const port =  3030;
       
 // Set up your routes and middleware here
 app.use(cors(corsOptions));

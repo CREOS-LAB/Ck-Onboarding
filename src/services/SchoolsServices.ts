@@ -52,6 +52,11 @@ export class SchoolsServices{
         return school
     }
 
+    async getSchoolByKey(key: string){
+        let school = await this.model.findOne({productKey:key})
+        return school
+    }
+
     async getSchoolByEmail(email: string){
         let school = await this.model.findOne({email})
         return school

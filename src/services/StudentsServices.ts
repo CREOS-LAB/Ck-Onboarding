@@ -4,16 +4,32 @@ import { LoginDto, StudentDto } from "../dto/studentDTO";
 import Student from "../models/students.model";
 import generateToken from "../utils/generateToken";
 import { Response } from "express";
+import { ProductKeyService } from "./ProductKeyServices";
+import { SchoolsServices } from "./SchoolsServices";
 
 @Service()
 export class StudentServices{
-    constructor(private readonly student = Student){
+    constructor(
+        private readonly student = Student,
+        private readonly productKey : ProductKeyService,
+        private readonly schoolServices : SchoolsServices
+        ){
 
     }
 
     async signUp(data: StudentDto){
         //validate data
         data.password = await encodePassword(data.password);
+        let status = await this.productKey.validateKey(data.productKey)
+        data.school = await this.schoolServices.getSchoolByKey(data.productKey)
+        //validate key
+        if(!status){
+            return{
+                payload: null,
+                message: "Invalid Product Key",
+                status: 401
+            }
+        }
         const student = await new this.student(data).save()
         return {
             payload: student,

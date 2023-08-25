@@ -114,6 +114,5 @@ export interface ResponseInterface{
     status?: number
 }
 
-Container.set(StudentsControllers, new StudentsControllers(new StudentServices()))
 
 export default StudentsControllers
