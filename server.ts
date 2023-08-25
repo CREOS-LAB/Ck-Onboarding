@@ -44,6 +44,5 @@ app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: N
 // Run Server
 app.listen(port, () => {
 console.log(`Server running on port ${port}`);
-      
   });
         
