@@ -2,10 +2,10 @@ import mongoose, {Schema} from "mongoose"
 import Gender from "../enum/gender"
 
 const schema = new Schema({
-    schoolName: {type: String, require: true},
-    email: {type: String, require: true, unique: true},
+    schoolName: {type: String, required: true},
+    email: {type: String, required: true, unique: true},
     productKey: {type: Schema.Types.ObjectId, ref: "ProductKey"},
-    password: {type: String, require: true},
+    password: {type: String, required: true},
     },
     {
         timestamps: true

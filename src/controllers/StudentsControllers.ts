@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import { reject, resolve } from "../utils/reponseService";
 import { LoginDto } from "../dto/studentDTO";
 import generateToken from "../utils/generateToken";
+import "reflect-metadata"
 
 @Service()
 class StudentsControllers{
@@ -18,7 +19,7 @@ class StudentsControllers{
             resolve(result.message, result.payload, 200, res)
         }
         catch(err: any){
-            reject(err.message, err.status, res)
+            reject(err.message, 400, res)
         }
     }
 
@@ -32,7 +33,7 @@ class StudentsControllers{
             resolve(result.message, result.payload, 200, res)
         }
         catch(err: any){
-            reject(err.message, err.status, res)
+            reject(err.message, 400, res)
         }
     }
 

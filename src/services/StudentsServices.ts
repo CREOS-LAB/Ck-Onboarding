@@ -24,6 +24,14 @@ export class StudentServices{
 
     async signIn(data: LoginDto){
         let student: any = await this.student.findOne({email: data.email})
+        if(!student){
+            return{
+                payload: null,
+                status: 404,
+                message: "There's no user with this email"
+            }
+        }
+        
         let doMatch = await comparePassword(data.password, student?.password)
         if(!doMatch){
             return {

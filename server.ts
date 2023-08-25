@@ -13,8 +13,8 @@ const port = String(process.env.PORT) || 3030;
       
 // Set up your routes and middleware here
 app.use(cors(corsOptions));
-express.urlencoded({limit:"50mb", extended: false})
-express.json({limit:"50mb"})
+app.use(express.urlencoded({limit:"50mb", extended: false}))
+app.use(express.json({limit:"50mb"}))
      
 // Run MongoDB
 mongoose.connect(process.env.MONGODB_URI || `mongodb://127.0.0.1:27017/onboarding`)
@@ -29,10 +29,10 @@ res.sendFile(__dirname + '/public/index.html');
 //students route
 // const studentServices = Container.get(StudentServices)
 const studentsController = Container.get(StudentsControllers);
-app.use("/students/sign-up", (req: Request, res: Response)=>studentsController.signUp(req, res))
-app.use("/students/sign-in", (req: Request, res: Response)=>studentsController.signIn(req, res))
-app.use("/students/:id", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentById(req, res,next))
-app.use("/students/:email", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentByEmail(req, res,next))
+app.post("/students/sign-up", (req: Request, res: Response)=>studentsController.signUp(req, res))
+app.post("/students/sign-in", (req: Request, res: Response)=>studentsController.signIn(req, res))
+app.get("/students/:id", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentById(req, res,next))
+app.get("/students/:email", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentByEmail(req, res,next))
 
       
 // Run Server

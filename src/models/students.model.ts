@@ -1,18 +1,16 @@
 import mongoose, {Schema} from "mongoose"
 import Gender from "../enum/gender"
-import { Service } from "typedi"
-import { string } from "joi"
 
 
 const schema = new Schema({
-    fullName: {type: String, require: true},
-    profilePicture: {type: String, require: false, default: "https://static.vecteezy.com/system/resources/previews/013/042/571/original/default-avatar-profile-icon-social-media-user-photo-in-flat-style-vector.jpg"},
-    gender: {type: String, require: true },
-    email: {type: String, require: true, unique: true},
+    fullName: {type: String, required: true},
+    profilePicture: {type: String, required: false, default: "https://static.vecteezy.com/system/resources/previews/013/042/571/original/default-avatar-profile-icon-social-media-user-photo-in-flat-style-vector.jpg"},
+    gender: {type: String, required: true },
+    email: {type: String, required: true, unique: true},
     productKey: {},
     school: {},
-    password: {type: String, require: true},
-    dob: {type: Date, require: false}
+    password: {type: String, required: true},
+    dob: {type: Date, required: false}
     },
     {
         timestamps: true
