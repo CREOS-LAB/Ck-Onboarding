@@ -22,6 +22,14 @@ export class ProductKeyService{
         }
 
         let key = await this.save({key: randomString})
-        return key;
+        return key.key;
+    }
+
+    async validateKey(key: string){
+        let result = await this.model.findOne({key: key})
+        if(!result){
+            return false
+        }
+        return true;
     }
 }

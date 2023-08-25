@@ -6,14 +6,19 @@ import { reject, resolve } from "../utils/reponseService";
 import { NextFunction, Request, Response } from "express";
 import { LoginDto } from "../dto/studentDTO";
 import generateToken from "../utils/generateToken";
+import { ProductKeyService } from "../services/ProductKeyServices";
 
 @Service()
 export class SchoolsController{
-    constructor(private readonly schoolServices : SchoolsServices){}
+    constructor(
+        private readonly schoolServices : SchoolsServices,
+        private readonly productKey: ProductKeyService
+        ){}
 
     async signUp(req: Request, res: Response){
         try{
             const data = req.body;
+            data.productKey = await this.productKey.generateKey()
             let result: ResponseInterface = await this.schoolServices.signUp(data);
             resolve(result.message, result.payload, 200, res)
         }
