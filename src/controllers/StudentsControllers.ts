@@ -44,7 +44,7 @@ class StudentsControllers{
             resolve("Successful", result, 200, res)
         }
         catch(err: any){
-            reject(err.message, err.status, res)
+            reject(err.message, 400, res)
         }
     }
 
@@ -55,7 +55,55 @@ class StudentsControllers{
             resolve("Successful", result, 200, res)
         }
         catch(err: any){
-            reject(err.message, err.status, res)
+            reject(err.message, 400, res)
+        }
+    }
+
+    async getLoggedInStudent(req: any, res: Response, next: NextFunction){
+        try{
+            const {_id} = req.user;
+            const user = await this.studentsServices.getStudentById(_id)
+            resolve("Successful", user, 200, res)
+            
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async logout(req: Request, res: Response, next: NextFunction){
+        try{
+            res.cookie("jwt", "", {
+                httpOnly: true,
+                expires: new Date()
+            })
+            res.json({message: "Logged Out Successfully"})
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async updateStudent(req: any, res: Response, next: NextFunction){
+        try{
+            const {_id} = req.user;
+            const {password, ...data} = req.body;
+            let result = await this.studentsServices.update(_id, data);
+            resolve("Update Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async deleteStudent(req: any, res: Response, next: NextFunction){
+        try{
+            const {_id} = req.user;
+            let result = await this.studentsServices.delete(_id);
+            resolve("Deleted Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
         }
     }
 }

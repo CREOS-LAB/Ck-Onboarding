@@ -57,4 +57,14 @@ export class StudentServices{
         let student = await this.student.findOne({email})
         return student
     }
+
+    async update(id: string, data: any){
+        let student = await this.student.findByIdAndUpdate(id, data, {new: true});
+        return student
+    }
+
+    async delete(id: string){
+        let student = await this.student.findByIdAndDelete(id)
+        return student
+    }
 }
