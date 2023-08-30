@@ -4,7 +4,7 @@ const whitelist: String[] = [
     'https://your-site.com',
     "*",
     "https://curiouz-kids.vercel.app",
-    "https://ck-kids-dashboard.vercel.app/"
+    "https://ck-kids-dashboard.vercel.app"
         ]
                 
     const corsOptions = {
