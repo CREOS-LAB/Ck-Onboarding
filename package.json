@@ -1,11 +1,11 @@
 {
     "name": "onboarding",
     "version": "1.0.0",
-    "main": "server.js",
+    "main": "index.js",
     "scripts": {
         "test": "echo 'Error: no test specified' && exit 1",
-        "start": "ts-node server.ts",
-        "dev": "ts-node-dev server.ts"
+        "start": "ts-node index.ts",
+        "dev": "ts-node-dev index.ts"
     },
     "keywords": [],
     "author": "",
