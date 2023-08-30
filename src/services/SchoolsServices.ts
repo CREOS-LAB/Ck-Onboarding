@@ -16,7 +16,7 @@ export class SchoolsServices{
         const school = await new this.model(data).save()
         return {
             payload: school,
-            message: "Created Successfully",
+            message: "Signed Up Successfully",
             status: 201
         }
     }

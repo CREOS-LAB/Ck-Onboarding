@@ -8,6 +8,9 @@ import { StudentServices } from './services/StudentsServices';
 import verifyAuth from './middlewares/verifyAuth';
 import cookieParser from "cookie-parser"
 import { SchoolsController } from './controllers/SchoolsController';
+import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+const swaggerDocument = require('../swagger.json');
 
 require("dotenv").config()
 
@@ -19,6 +22,8 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({limit:"50mb", extended: false}))
 app.use(express.json({limit:"50mb"}))
 app.use(cookieParser())
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
      
 // Run MongoDB
 mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`)

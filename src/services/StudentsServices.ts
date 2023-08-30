@@ -33,7 +33,7 @@ export class StudentServices{
         const student = await new this.student(data).save()
         return {
             payload: student,
-            message: "Created Successfully",
+            message: "Signed Up Successfully",
             status: 201
         }
     }
