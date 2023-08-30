@@ -1,18 +1,18 @@
 import express, { NextFunction, Request, Response } from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import corsOptions from './src/config/cors';
+import corsOptions from './config/cors';
 import Container from 'typedi';
-import StudentsControllers from './src/controllers/StudentsControllers';
-import { StudentServices } from './src/services/StudentsServices';
-import verifyAuth from './src/middlewares/verifyAuth';
+import StudentsControllers from './controllers/StudentsControllers';
+import { StudentServices } from './services/StudentsServices';
+import verifyAuth from './middlewares/verifyAuth';
 import cookieParser from "cookie-parser"
-import { SchoolsController } from './src/controllers/SchoolsController';
+import { SchoolsController } from './controllers/SchoolsController';
 
 require("dotenv").config()
 
 const app = express();
-const port =  3030;
+const port =  process.env.PORT || 3020;
       
 // Set up your routes and middleware here
 app.use(cors(corsOptions));
@@ -21,9 +21,9 @@ app.use(express.json({limit:"50mb"}))
 app.use(cookieParser())
      
 // Run MongoDB
-// mongoose.connect(process.env.MONGODB_URI || `mongodb://127.0.0.1:27017/onboarding`)
-// const connection = mongoose.connection
-// connection.once('open', ()=>{console.log('Database running Successfully')});
+mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/onboarding`)
+const connection = mongoose.connection
+connection.once('open', ()=>{console.log('Database running Successfully')});
       
 //render the html file
 app.get('/', (req, res) => {
