@@ -3,8 +3,10 @@ import * as jwt from "jsonwebtoken";
 
 const jwtSecret: string = String(process.env.JWT_SECRET);
 const verifyAuth = (req: any, res: Response, next: NextFunction)=>{
-    const {authorization} = req.headers;
-    const token = authorization.replace("Bearer ", "")
+    // const {authorization} = req.headers;
+    // const token = authorization.replace("Bearer ", "")
+    const {token} = req.cookies
+    
     if (!token){
         return res.status(403).json({message: 'Unauthorized'})
     }

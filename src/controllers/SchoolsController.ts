@@ -32,7 +32,7 @@ export class SchoolsController{
             const data: LoginDto = req.body;
             let result: ResponseInterface = await this.schoolServices.signIn(data);
             if(result.payload){
-                generateToken(result.payload._id, result.payload.email)
+                generateToken(result.payload._id, result.payload.email, res)
             }
             resolve(result.message, result.payload, 200, res)
         }

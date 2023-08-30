@@ -21,7 +21,7 @@ app.use(express.json({limit:"50mb"}))
 app.use(cookieParser())
      
 // Run MongoDB
-mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/onboarding`)
+mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`)
 const connection = mongoose.connection
 connection.once('open', ()=>{console.log('Database running Successfully')});
       

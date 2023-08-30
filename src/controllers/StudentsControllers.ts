@@ -16,7 +16,7 @@ class StudentsControllers{
         try{
             const data = req.body;
             let result: ResponseInterface = await this.studentsServices.signUp(data);
-            resolve(result.message, result.payload, 200, res)
+            resolve(result.message, result.payload, result.status, res)
         }
         catch(err: any){
             reject(err.message, 400, res)
@@ -27,11 +27,12 @@ class StudentsControllers{
         try{
             const data: LoginDto = req.body;
             let result: ResponseInterface = await this.studentsServices.signIn(data);
-            if(result.payload){
+            // if(result.status > 200){
                 
-            }
+            // }
+            generateToken(result.payload._id, result.payload.email, res)
             
-            resolve(result.message, result.payload, 200, res)
+            resolve(result.message, result.payload, result.status, res)
         }
         catch(err: any){
             reject(err.message, 400, res)
@@ -113,7 +114,7 @@ export interface ResponseInterface{
     message: string,
     payload?: any,
     token?: string,
-    status?: number
+    status: number
 }
 
 
