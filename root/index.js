@@ -14,7 +14,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const SchoolsController_1 = require("./controllers/SchoolsController");
 require("dotenv").config();
 const app = (0, express_1.default)();
-const port = 3040;
+const port = process.env.PORT || 3020;
 // Set up your routes and middleware here
 app.use((0, cors_1.default)(cors_2.default));
 app.use(express_1.default.urlencoded({ limit: "50mb", extended: false }));
@@ -26,7 +26,7 @@ const connection = mongoose_1.default.connection;
 connection.once('open', () => { console.log('Database running Successfully'); });
 //render the html file
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(process.cwd() + '/public/index.html');
 });
 //students route
 const studentsController = typedi_1.default.get(StudentsControllers_1.default);
