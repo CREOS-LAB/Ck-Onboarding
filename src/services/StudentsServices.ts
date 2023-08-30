@@ -57,8 +57,9 @@ export class StudentServices{
             }
         }
 
+        let token = generateToken(student._id, student.email)
         return {
-            payload: student,
+            payload: {student, token},
             message: "Login Successful",
             status: 200
         }
