@@ -6,22 +6,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
-const cors_2 = __importDefault(require("./config/cors"));
 const typedi_1 = __importDefault(require("typedi"));
 const StudentsControllers_1 = __importDefault(require("./controllers/StudentsControllers"));
 const verifyAuth_1 = __importDefault(require("./middlewares/verifyAuth"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const SchoolsController_1 = require("./controllers/SchoolsController");
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swaggerDocument = require('../swagger.json');
 require("dotenv").config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3020;
 // Set up your routes and middleware here
-app.use((0, cors_1.default)(cors_2.default));
+app.use((0, cors_1.default)({
+    origin: "*"
+}));
 app.use(express_1.default.urlencoded({ limit: "50mb", extended: false }));
 app.use(express_1.default.json({ limit: "50mb" }));
 app.use((0, cookie_parser_1.default)());
+app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
 // Run MongoDB
-mongoose_1.default.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/onboarding`);
+mongoose_1.default.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`);
 const connection = mongoose_1.default.connection;
 connection.once('open', () => { console.log('Database running Successfully'); });
 //render the html file

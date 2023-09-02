@@ -63,7 +63,7 @@ let SchoolsController = class SchoolsController {
                 const data = req.body;
                 let result = yield this.schoolServices.signIn(data);
                 if (result.payload) {
-                    (0, generateToken_1.default)(result.payload._id, result.payload.email);
+                    (0, generateToken_1.default)(result.payload._id, result.payload.email, res);
                 }
                 (0, reponseService_1.resolve)(result.message, result.payload, 200, res);
             }

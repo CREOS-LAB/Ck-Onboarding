@@ -51,10 +51,14 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const typedi_1 = __importStar(require("typedi"));
 const StudentsServices_1 = require("../services/StudentsServices");
 const reponseService_1 = require("../utils/reponseService");
+const generateToken_1 = __importDefault(require("../utils/generateToken"));
 require("reflect-metadata");
 let StudentsControllers = class StudentsControllers {
     constructor(studentsServices = typedi_1.default.get(StudentsServices_1.StudentServices)) {
@@ -65,7 +69,7 @@ let StudentsControllers = class StudentsControllers {
             try {
                 const data = req.body;
                 let result = yield this.studentsServices.signUp(data);
-                (0, reponseService_1.resolve)(result.message, result.payload, 200, res);
+                (0, reponseService_1.resolve)(result.message, result.payload, result.status, res);
             }
             catch (err) {
                 (0, reponseService_1.reject)(err.message, 400, res);
@@ -76,12 +80,15 @@ let StudentsControllers = class StudentsControllers {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const data = req.body;
-                let result = yield this.studentsServices.signIn(data);
-                if (result.payload) {
+                let result = yield this.studentsServices.signIn(data, res);
+                if (result.status == 200) {
+                    console.log(result.status);
+                    (0, generateToken_1.default)(result.payload._id, result.payload.email, res);
                 }
-                (0, reponseService_1.resolve)(result.message, result.payload, 200, res);
+                (0, reponseService_1.resolve)(result.message, result.payload, result.status, res);
             }
             catch (err) {
+                console.log(err);
                 (0, reponseService_1.reject)(err.message, 400, res);
             }
         });

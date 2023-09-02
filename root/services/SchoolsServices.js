@@ -37,7 +37,7 @@ let SchoolsServices = class SchoolsServices {
             const school = yield new this.model(data).save();
             return {
                 payload: school,
-                message: "Created Successfully",
+                message: "Signed Up Successfully",
                 status: 201
             };
         });

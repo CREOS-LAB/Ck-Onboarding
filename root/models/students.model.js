@@ -32,7 +32,14 @@ const schema = new mongoose_1.Schema({
     productKey: { type: String, required: true },
     school: { type: mongoose_1.Schema.Types.ObjectId, ref: "School" },
     password: { type: String, required: true },
-    dob: { type: Date, required: false }
+    dob: { type: Date, required: false },
+    gem: { type: Number, default: 0 },
+    courses: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Course" }],
+    hoursSpent: { type: Number },
+    stage: { type: String },
+    badges: { type: String },
+    achievement: { type: String },
+    streak: { type: Number, default: 0 }
 }, {
     timestamps: true
 });

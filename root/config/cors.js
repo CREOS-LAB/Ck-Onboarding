@@ -4,7 +4,9 @@ const whitelist = [
     'http://localhost:3000',
     'http://127.0.0.0.1:3000',
     'https://your-site.com',
-    "*"
+    "*",
+    "https://curiouz-kids.vercel.app",
+    "https://ck-kids-dashboard.vercel.app"
 ];
 const corsOptions = {
     origin: function (origin, callback) {

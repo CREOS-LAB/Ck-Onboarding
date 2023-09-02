@@ -51,12 +51,12 @@ let StudentServices = class StudentServices {
             const student = yield new this.student(data).save();
             return {
                 payload: student,
-                message: "Created Successfully",
+                message: "Signed Up Successfully",
                 status: 201
             };
         });
     }
-    signIn(data) {
+    signIn(data, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let student = yield this.student.findOne({ email: data.email });
             if (!student) {
@@ -74,7 +74,7 @@ let StudentServices = class StudentServices {
                     message: "Incorrect Password"
                 };
             }
-            let token = (0, generateToken_1.default)(student._id, student.email);
+            let token = (0, generateToken_1.default)(student._id, student.email, res);
             return {
                 payload: { student, token },
                 message: "Login Successful",
