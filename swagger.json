@@ -190,26 +190,32 @@
     "Sign in Details": {
         "properties":{
             "email":{
-                "type": "eolaosebikan60@gmail.com"
+              "type":"string",
+                "example": "eolaosebikan60@gmail.com"
             },
             "password": {
-                "type": "12345"
+                "type": "string",
+                "example": "12345"
             }
         }
     },
     "Sign up Details": {
         "properties":{
             "fullName": {
-                "type": "string"
+                "type": "string",
+                "example":"John Doe"
             },
             "email":{
-                "type": "string"
+                "type": "string",
+                "example": "john@mail.com"
             },
             "password": {
-                "type": "string"
+                "type": "string",
+                "example": "123456"
             },
             "productKey": {
-                "type": "string"
+                "type": "string",
+                "example": "6NNY7VUOMPJM"
             }
         }
     },
