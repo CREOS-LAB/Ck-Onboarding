@@ -38,7 +38,7 @@ export class StudentServices{
         }
     }
 
-    async signIn(data: LoginDto){
+    async signIn(data: LoginDto, res: Response){
         let student: any = await this.student.findOne({email: data.email})
         if(!student){
             return{
@@ -57,9 +57,9 @@ export class StudentServices{
             }
         }
 
-        // let token = generateToken(student._id, student.email)
+        let token = generateToken(student._id, student.email, res)
         return {
-            payload: student,
+            payload: {student, token},
             message: "Login Successful",
             status: 200
         }

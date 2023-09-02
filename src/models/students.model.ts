@@ -10,7 +10,14 @@ const schema = new Schema({
     productKey: {type:String, required: true},
     school: {type: Schema.Types.ObjectId, ref:"School"},
     password: {type: String, required: true},
-    dob: {type: Date, required: false}
+    dob: {type: Date, required: false},
+    gem: {type: Number, default: 0},
+    courses: [{type: Schema.Types.ObjectId, ref: "Course"}],
+    hoursSpent: {type: Number},
+    stage: {type: String},
+    badges: {type: String},
+    achievement: {type: String},
+    streak: {type: Number, default: 0}
     },
     {
         timestamps: true

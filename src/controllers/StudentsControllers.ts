@@ -26,7 +26,7 @@ class StudentsControllers{
     async signIn(req: Request, res: Response){
         try{
             const data: LoginDto = req.body;
-            let result: ResponseInterface = await this.studentsServices.signIn(data);
+            let result: ResponseInterface = await this.studentsServices.signIn(data, res);
             
             if(result.status == 200){
                 console.log(result.status)
