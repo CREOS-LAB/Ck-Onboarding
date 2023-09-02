@@ -101,7 +101,7 @@
               "in": "body",
               "description": "Details to Sign School In",
               "schema": {
-                "$ref": "#/definitions/Sign in Details"
+                "$ref": "#/definitions/School Sign in Details"
               }
             }
           ],
@@ -187,18 +187,30 @@
             }
         }
     },
-    "Sign in Details": {
+    "School Sign in Details": {
         "properties":{
             "email":{
               "type":"string",
-                "example": "eolaosebikan60@gmail.com"
+                "example": "Olam@mail.com"
             },
             "password": {
                 "type": "string",
-                "example": "123456"
+                "example": "12345"
             }
         }
     },
+    "Sign in Details": {
+      "properties":{
+          "email":{
+            "type":"string",
+              "example": "eolaosebikan60@gmail.com"
+          },
+          "password": {
+              "type": "string",
+              "example": "123456"
+          }
+      }
+  },
     "Sign up Details": {
         "properties":{
             "fullName": {
