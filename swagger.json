@@ -75,7 +75,7 @@
               "in": "body",
               "description": "Details to Sign up",
               "schema": {
-                "$ref": "#/definitions/ ui gnUpDetails"
+                "$ref": "#/definitions/Sign up Details"
               }
             }
           ],
