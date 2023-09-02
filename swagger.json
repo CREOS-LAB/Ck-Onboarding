@@ -26,10 +26,6 @@
       {
         "name": "School Sign up",
         "description": "API for Signing Students Up in the system"
-      },
-      {
-        "name": "Update Profile",
-        "description": "API Endpoint for updating students data"
       }
     ],
     "schemes": [
@@ -139,32 +135,6 @@
           "responses": {
             "200": {
               "description": "Signed Up Successfully",
-              "schema": {
-                "$ref": "#/definitions/Response"
-              }
-            }
-          }
-        }
-      },
-      "/student/update": {
-        "parameters": [
-          {
-            "name": "Update Student Profile",
-            "in": "body",
-            "description": "API Endpoint for updating students data",
-            "schema": {
-              "$ref": ""
-            }
-          }
-        ],
-        "patch": {
-          "summary": "Update Student Details",
-          "tags": [
-            "Update Profile"
-          ],
-          "responses": {
-            "200": {
-              "description": "Updated Successfully",
               "schema": {
                 "$ref": "#/definitions/Response"
               }
