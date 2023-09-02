@@ -234,13 +234,16 @@
     "School Signup Details": {
       "properties":{
           "schoolName": {
-              "type": "string"
+              "type": "string",
+              "example": "Curiouz Kids"
           },
           "email":{
-              "type": "string"
+              "type": "string",
+              "example": "curiouz@mail.com"
           },
           "password": {
-              "type": "string"
+              "type": "string",
+              "example": "12345"
           }
       }
   }
