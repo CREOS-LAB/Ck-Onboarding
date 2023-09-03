@@ -10,6 +10,7 @@ const generateToken = (_id: string, email: string, response: Response)=>{
         httpOnly: true,
         secure: true,
         maxAge: 24 * 60 * 60 * 10000,
+        domain: ".vercel.app"
     })
     return token
 }

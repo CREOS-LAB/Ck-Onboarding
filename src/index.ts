@@ -26,6 +26,12 @@ app.use(express.json({limit:"50mb"}))
 app.use(cookieParser())
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get('/cookie', (req:Request, res: Response)=>{
+  res.cookie("cookie", "12345", {domain: ".vercel.app"});
+  console.log(req.cookies)
+  res.send(req.cookies)
+})
      
 // Run MongoDB
 mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`)
