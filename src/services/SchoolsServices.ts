@@ -3,17 +3,23 @@ import School from "../models/schools.model";
 import { comparePassword, encodePassword } from "../config/bcrypt";
 import { LoginDto } from "../dto/studentDTO";
 import "reflect-metadata"
+import EmailService from "./EmailService";
 
 @Service()
 export class SchoolsServices{
     constructor(
-        private readonly model = School
+        private readonly model = School,
+        private readonly emailService : EmailService
+
     ){}
 
     async signUp(data: any){
         //validate data
+        let password: string = data.password;
         data.password = await encodePassword(data.password);
         const school = await new this.model(data).save()
+        this.emailService.sendSignUpDetails(data.email, password, school.productKey)
+
         return {
             payload: school,
             message: "Signed Up Successfully",

@@ -47,6 +47,7 @@ app.get("/student/email/:email", (req: Request, res: Response, next: NextFunctio
 app.post("/logout", (req: Request, res: Response, next: NextFunction)=>studentsController.logout(req, res,next))
 app.patch("/student/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res,next))
 app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
+app.get("/students?limit=10", (req: Request, res: Response, next: NextFunction)=>studentsController.leaderBoard(req, res,next))
 
 //schools route
 const schoolController = Container.get(SchoolsController);

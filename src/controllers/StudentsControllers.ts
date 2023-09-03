@@ -110,6 +110,17 @@ class StudentsControllers{
             reject(err.message, 400, res)
         }
     }
+
+    async leaderBoard(req: Request, res: Response){
+        try{
+            const {limit} = req.query;
+            let result = await this.studentsServices.getLeaderBoard(Number(limit));
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
 }
 
 export interface ResponseInterface{

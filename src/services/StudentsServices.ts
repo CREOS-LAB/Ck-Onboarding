@@ -84,4 +84,9 @@ export class StudentServices{
         let student = await this.student.findByIdAndDelete(id)
         return student
     }
+
+    async getLeaderBoard(limit: number = 10){
+        let students = await this.student.find().limit(limit).sort({gem: 1});
+        return students;
+    }
 }
