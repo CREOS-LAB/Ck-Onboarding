@@ -42,6 +42,7 @@ app.get("/student/email/:email", (req, res, next) => studentsController.getStude
 app.post("/logout", (req, res, next) => studentsController.logout(req, res, next));
 app.patch("/student/update", verifyAuth_1.default, (req, res, next) => studentsController.updateStudent(req, res, next));
 app.delete("/students/delete", verifyAuth_1.default, (req, res, next) => studentsController.deleteStudent(req, res, next));
+app.get("/students?limit=10", (req, res, next) => studentsController.leaderBoard(req, res));
 //schools route
 const schoolController = typedi_1.default.get(SchoolsController_1.SchoolsController);
 app.get("/school/", verifyAuth_1.default, (req, res, next) => schoolController.getLoggedInSchool(req, res, next));

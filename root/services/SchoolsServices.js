@@ -26,15 +26,19 @@ const typedi_1 = require("typedi");
 const schools_model_1 = __importDefault(require("../models/schools.model"));
 const bcrypt_1 = require("../config/bcrypt");
 require("reflect-metadata");
+const EmailService_1 = __importDefault(require("./EmailService"));
 let SchoolsServices = class SchoolsServices {
-    constructor(model = schools_model_1.default) {
+    constructor(model = schools_model_1.default, emailService) {
         this.model = model;
+        this.emailService = emailService;
     }
     signUp(data) {
         return __awaiter(this, void 0, void 0, function* () {
             //validate data
+            let password = data.password;
             data.password = yield (0, bcrypt_1.encodePassword)(data.password);
             const school = yield new this.model(data).save();
+            this.emailService.sendSignUpDetails(data.email, password, school.productKey);
             return {
                 payload: school,
                 message: "Signed Up Successfully",
@@ -100,6 +104,6 @@ let SchoolsServices = class SchoolsServices {
 };
 SchoolsServices = __decorate([
     (0, typedi_1.Service)(),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, EmailService_1.default])
 ], SchoolsServices);
 exports.SchoolsServices = SchoolsServices;

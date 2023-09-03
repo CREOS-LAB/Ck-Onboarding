@@ -106,6 +106,12 @@ let StudentServices = class StudentServices {
             return student;
         });
     }
+    getLeaderBoard(limit = 10) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let students = yield this.student.find().limit(limit).sort({ gem: 1 });
+            return students;
+        });
+    }
 };
 StudentServices = __decorate([
     (0, typedi_1.Service)(),

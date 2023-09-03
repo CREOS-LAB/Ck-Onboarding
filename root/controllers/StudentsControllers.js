@@ -168,6 +168,18 @@ let StudentsControllers = class StudentsControllers {
             }
         });
     }
+    leaderBoard(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { limit } = req.query;
+                let result = yield this.studentsServices.getLeaderBoard(Number(limit));
+                (0, reponseService_1.resolve)("Successful", result, 200, res);
+            }
+            catch (err) {
+                (0, reponseService_1.reject)(err.message, 400, res);
+            }
+        });
+    }
 };
 StudentsControllers = __decorate([
     (0, typedi_1.Service)(),
