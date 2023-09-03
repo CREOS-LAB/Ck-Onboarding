@@ -22,7 +22,7 @@ const port =  process.env.PORT || 3020;
 //   origin: "*"
 // }));
 
-const allowedOrigins = ['http://localhost:3000', "https://ck-kids-dashboard.vercel.app/"];
+const allowedOrigins = ['http://localhost:3000', "https://ck-kids-dashboard.vercel.app"];
 
 
 // Enable CORS and allow credentials
