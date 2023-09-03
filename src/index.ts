@@ -18,9 +18,27 @@ const app = express();
 const port =  process.env.PORT || 3020;
       
 // Set up your routes and middleware here
-app.use(cors({
-  origin: "*"
-}));
+// app.use(cors({
+//   origin: "*"
+// }));
+
+const allowedOrigins = ['http://localhost:3000', "https://ck-kids-dashboard.vercel.app/"];
+
+
+// Enable CORS and allow credentials
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const origin = req.headers.origin;
+  
+  // Check if the origin is in the allowedOrigins array
+  if (allowedOrigins.includes(String(origin))) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-csrf-token');
+  }
+
+  next();
+});
+
 app.use(express.urlencoded({limit:"50mb", extended: false}))
 app.use(express.json({limit:"50mb"}))
 app.use(cookieParser())
