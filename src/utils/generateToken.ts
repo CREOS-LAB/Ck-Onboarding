@@ -12,6 +12,7 @@ const generateToken = (_id: string, email: string, response: Response)=>{
         maxAge: 24 * 60 * 60 * 10000,
         domain: ".vercel.app"
     })
+    console.log(token)
     return token
 }
 
