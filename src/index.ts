@@ -35,11 +35,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-csrf-token');
   }
-
   next();
 });
 
-app.use(express.urlencoded({limit:"50mb", extended: false}))
+app.use(express.urlencoded({limit:"50mb",extended: false}))
 app.use(express.json({limit:"50mb"}))
 app.use(cookieParser())
 
