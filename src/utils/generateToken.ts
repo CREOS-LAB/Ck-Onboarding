@@ -9,7 +9,7 @@ const generateToken = (_id: string, email: string, response: Response)=>{
     response.cookie("token", token, {
         sameSite: "none",
         secure: true,
-        maxAge: 24 * 60 * 60 * 7,
+        maxAge: 24 * 60 * 60 * 1000,
         domain: ".vercel.app",
         path: "/signin" // Set the path to /signin
     })
