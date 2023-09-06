@@ -8,7 +8,7 @@ const generateToken = (_id: string, email: string, response: Response)=>{
     const token = jwt.sign({_id, email}, jwtSecret)
     response.cookie("token", token, {
         sameSite: isProd ? "none" : "strict",
-        secure: isProd,
+        secure: false,
         maxAge: 24 * 60 * 60 * 1000,
         // domain: isProd ? ".vercel.app" : undefined,
         httpOnly: false,
