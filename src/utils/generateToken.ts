@@ -10,7 +10,7 @@ const generateToken = (_id: string, email: string, response: Response)=>{
         sameSite: isProd ? "none" : "strict",
         secure: isProd,
         maxAge: 24 * 60 * 60 * 1000,
-        domain: isProd ? ".vercel.app" : undefined,
+        // domain: isProd ? ".vercel.app" : undefined,
         httpOnly: false,
     })
     console.log(token)
