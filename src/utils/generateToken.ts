@@ -13,7 +13,6 @@ const generateToken = (_id: string, email: string, response: Response)=>{
         // domain: isProd ? ".vercel.app" : undefined,
         httpOnly: false,
     })
-    console.log(token)
     return token
 }
 

@@ -28,11 +28,6 @@ class StudentsControllers{
             const data: LoginDto = req.body;
             let result: ResponseInterface = await this.studentsServices.signIn(data, res);
             
-            if(result.status == 200){
-                console.log(result.status)
-                generateToken(result.payload._id, result.payload.email, res)
-            }
-            
             resolve(result.message, result.payload, result.status, res)
         }
         catch(err: any){
