@@ -10,6 +10,10 @@ import cookieParser from "cookie-parser"
 import { SchoolsController } from './controllers/SchoolsController';
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import { CollectionsController } from './controllers/CollectionsController';
+import { ClassController } from './controllers/ClassesController';
+import { VideosController } from './controllers/VideosController';
+import { CommentsController } from './controllers/CommentsController';
 const swaggerDocument = require('../swagger.json');
 
 require("dotenv").config()
@@ -85,6 +89,45 @@ app.post("/logout", (req: Request, res: Response, next: NextFunction)=>schoolCon
 app.patch("/school/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.updateSchool(req, res,next))
 app.delete("/school/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.deleteSchool(req, res,next))
       
+
+// Collections route
+const collectionController = Container.get(CollectionsController);
+
+app.get("/collections", (req: Request, res: Response, next: NextFunction)=>collectionController.getAll(req, res, next));
+app.get("/collection/:id", (req: Request, res: Response, next: NextFunction)=>collectionController.getCollectionById(req, res, next))
+app.delete("/collection/:id", (req: Request, res: Response, next: NextFunction)=>collectionController.deleteCollection(req, res, next))
+app.patch("/collection/:id", (req: Request, res: Response, next: NextFunction)=>collectionController.updateCollection(req, res, next))
+app.get("/collections/:classId", (req: Request, res: Response, next: NextFunction)=>collectionController.getCollectionByClass(req, res, next))
+app.post("/collection", (req: Request, res: Response, next: NextFunction)=>collectionController.create(req, res, next))
+
+//Classes route
+const classController = Container.get(ClassController);
+
+app.get("/classes", (req: Request, res: Response, next: NextFunction)=>classController.getAll(req, res, next));
+app.get("/class/:id", (req: Request, res: Response, next: NextFunction)=>classController.getClassById(req, res, next))
+app.delete("/class/:id", (req: Request, res: Response, next: NextFunction)=>classController.deleteclass(req, res, next))
+app.patch("/class/:id", (req: Request, res: Response, next: NextFunction)=>classController.updateclass(req, res, next))
+app.post("/class", (req: Request, res: Response, next: NextFunction)=>classController.create(req, res, next))
+
+//Videos route
+const videosController = Container.get(VideosController)
+
+app.get("/videos", (req: Request, res: Response, next: NextFunction)=>videosController.getAll(req, res, next));
+app.get("/video/:id", (req: Request, res: Response, next: NextFunction)=>videosController.getVideoById(req, res, next))
+app.delete("/video/:id", (req: Request, res: Response, next: NextFunction)=>videosController.deleteVideo(req, res, next))
+app.patch("/video/:id", (req: Request, res: Response, next: NextFunction)=>videosController.updateVideo(req, res, next))
+app.get("/video/:collectionId", (req: Request, res: Response, next: NextFunction)=>videosController.getVideosByCollection(req, res, next))
+app.post("/video", (req: Request, res: Response, next: NextFunction)=>videosController.create(req, res, next))
+
+//Comments route
+const commentsController = Container.get(CommentsController);
+
+app.get("/comment", (req: Request, res: Response, next: NextFunction)=>commentsController.getAll(req, res, next));
+app.get("/comment/:id", (req: Request, res: Response, next: NextFunction)=>commentsController.getCommentById(req, res, next))
+app.delete("/comment/:id", (req: Request, res: Response, next: NextFunction)=>commentsController.deleteComment(req, res, next))
+app.patch("/comment/:id", (req: Request, res: Response, next: NextFunction)=>commentsController.updateComment(req, res, next))
+app.get("/comment/:videoId", (req: Request, res: Response, next: NextFunction)=>commentsController.getCommentsByVideo(req, res, next))
+app.post("/comment", (req: Request, res: Response, next: NextFunction)=>commentsController.create(req, res, next))
 
 // Run Server
 app.listen(port, () => {
