@@ -10,9 +10,11 @@ export class ClassController{
     constructor(private readonly classServices : ClassServices)
     {}
 
-    async create(req: Request, res: Response, next: NextFunction){
+    async create(req: any, res: Response, next: NextFunction){
         try{
             let data = req.body;
+            data.name = String(data.name).toUpperCase()
+            data.school = req.user._id
             let result = await this.classServices.save(data);
             resolve("Successful", result, 200, res)
         }
@@ -23,7 +25,8 @@ export class ClassController{
 
     async getAll(req: Request, res: Response, next: NextFunction){
         try{
-            let result = await this.classServices.getAll();
+            const {schoolId} = req.params
+            let result = await this.classServices.getAll(schoolId);
             resolve("Successful", result, 200, res)
         }
         catch(err: any){

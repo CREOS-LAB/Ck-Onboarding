@@ -26,6 +26,81 @@
       {
         "name": "School Sign up",
         "description": "API for Signing Students Up in the system"
+      },
+      {
+        "name": "Logged In Student Profile",
+        "description": "API for getting logged in student details"
+      },
+      {
+        "name": "Fetch Student Details by Email",
+        "description": "API for getting student details by email"
+      },
+      {
+        "name": "Fetch Student Details by ID",
+        "description": "API for getting student details by id"
+      },
+      {
+        "name": "Update Student Profile",
+        "description": "API to update user profile"
+      },
+      {
+        "name": "Get Leadership Details",
+        "description": "API for getting top students to be displayed on the leadership dashboard."
+      },
+      
+      {
+        "name": "Upload Classes",
+        "description": "API to upload a class"
+      },
+      {
+        "name": "Delete Class",
+        "description": "API to delete Class"
+      },
+      {
+        "name": "Get all Classes By SchoolId",
+        "description": "API to get all classes added by a school"
+      },
+      {
+        "name": "Get all Collections"
+      },
+      {
+        "name": "Get Collections By Class"
+      },
+      {
+        "name": "Delete Collection"
+      },
+      {
+        "name": "Edit Collection"
+      },
+      {
+        "name": "Upload Collection"
+      },
+      {
+        "name": "Get collection by its ID"
+      },
+      {
+        "name": "Get all Videos by CollectionID"
+      },
+      {
+        "name": "Get Video by its ID"
+      },
+      {
+        "name": "Delete Video"
+      },
+      {
+        "name": "Edit Video"
+      },
+      {
+        "name": "Upload Video"
+      },
+      {
+        "name": "Get all Comment by VideoID"
+      },
+      {
+        "name": "Delete Comment"
+      },
+      {
+        "name": "Upload Comment"
       }
     ],
     "schemes": [
@@ -141,6 +216,455 @@
             }
           }
         }
+      },
+      "/student/":{
+        "parameters": [
+          {
+            "name": "Logged In Student Profile",
+            "description": "API for getting logged in student details"
+          }
+        ],
+        "get": {
+          "tags": ["Logged In Student Profile"]
+        },
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema":{
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      },
+      "/student/email/:email": {
+        "parameters": [
+          {
+            "name": "Fetch Student Details by Email",
+            "description": "API for getting student details by email"
+          }
+        ],
+        "get": {
+          "tags": ["Fetch Student Details by Email"]
+        },
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema":{
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      },
+      "/student/:id": {
+        "parameters": [
+          {
+            "name": "Fetch Student Details by ID",
+            "description": "API for getting student details by id"
+          }
+        ],
+        "get": {
+          "tags": ["Fetch Student Details by ID"]
+        },
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema":{
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      },
+      "/student/update":{
+        "parameters": [
+          {
+            "name": "Update Student Profile",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Update Profile"
+            },
+            "description": "API to update user profile"
+          }
+        ],
+        "patch": {
+          "tags": ["Update Student Profile"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema":{
+                "$ref": "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/student/leadership?limit=10": {
+        "parameters": [
+          {
+            "name": "Get Leadership Details",
+            "description": "API for getting top students to be displayed on the leadership dashboard."
+          }
+        ],
+        "get": {
+          "tags": ["Get Leadership Details"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema":{
+                "$ref": "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/class/:schoolId":{
+        "parameters": [
+          {
+            "name": "Upload Classes",
+            "description": "API to upload a class",
+            "in": "body",
+            "schema": {
+              "properties":{
+                "name": {
+                  "type" : "string",
+                  "example": "ss3"
+                }
+              }
+            }
+          }
+        ],
+        "post": {
+          "tags": ["Upload Classes"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema":{
+                "$ref": "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/class/:id":{
+        "parameters": [
+          {
+            "name": "Delete Class",
+            "description": "API to delete Class"
+          }
+        ],
+        "delete": {
+          "tags": ["Delete Class"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+                "$ref": "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/classes/:schoolId":{
+        "parameters": [
+          {
+            "name": "Get all Classes By SchoolId",
+            "description": "API to get all classes added by a school"
+          }
+        ],
+        "get": {
+          "tags": ["Get all Classes By SchoolId"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+            }
+            }
+          }
+        }
+      },
+      "/collecttions": {
+        "parameters": [
+          {
+            "name": "Get all Collections"
+          }
+        ],
+        "get": {
+          "tags": ["Get all Collections"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/collection/:id":{
+        "parameters": [
+          {
+            "name": "Get collection by its ID"
+          }
+        ],
+        "get": {
+          "tags": ["Get collection by its ID"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/collection/delete/:id": {
+        "parameters": [
+          {
+            "name": "Delete Collection"
+          }
+        ],
+        "delete": {
+          "tags":["Delete Collection"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/collection/update/:id": {
+        "parameters": [
+          {
+            "name": "Edit Collection",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "patch": {
+          "tags": ["Edit Collection"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/collections/:classId": {
+        "parameters": [
+          {
+            "name": "Get Collections By Class"
+          }
+        ],
+        "get": {
+          "tags": ["Get Collections By Class"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/collection": {
+        "parameters": [
+          {
+            "name": "Upload Collection"
+          }
+        ],
+        "post": {
+          "tags": ["Upload Collection"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/videos": {
+        "parameters": [
+          {
+            "name": "Upload Video",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "link": "string",
+                  "collectionRelation": "string"
+                }
+              }
+            }
+          }
+        ],
+        "post": {
+          "tags": ["Upload Video"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/video/:id": {
+        "parameters": [
+          {
+            "name": "Get Video by its ID"
+          }
+        ],
+        "get": {
+          "tags": ["Get Video by its ID"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+              "$ref":  "#/definitions/Response"
+              }
+            }
+          }
+        }
+      },
+      "/video/delete/:id": {
+        "parameters": [
+          {
+            "name": "Delete Video"
+          }
+        ],
+        "delete": {
+          "tags": ["Delete Video"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+                "$ref":  "#/definitions/Response"
+                }
+            }
+          }
+        }
+      },
+      "/video/update/:id": {
+        "parameters": [
+          {
+            "name": "Edit Video"
+          }
+        ],
+        "patch": {
+          "tags": ["Edit Video"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+                "$ref":  "#/definitions/Response"
+                }
+            }
+          }
+        }
+      },
+      "/video/:collectionId": {
+        "parameters": [
+          {
+            "name": "Get all Videos by CollectionID"
+          }
+        ],
+        "get": {
+          "tags": ["Get all Videos by CollectionID"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+                "$ref":  "#/definitions/Response"
+                }
+            }
+          }
+        }
+      },
+      "/comment/:videoId": {
+        "parameters": [
+          {
+            "name": "Get all Comment by VideoID"
+          }
+        ],
+        "get": {
+          "tags": ["Get all Comment by VideoID"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+                "$ref":  "#/definitions/Response"
+                }
+            }
+          }
+        }
+      },
+      "/comment": {
+        "parameters": [
+          {
+            "name": "Upload Comment",
+            "in": "body",
+            "schema": {
+              "properties": {
+                "video": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "post": {
+          "tags": ["Upload Comment"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+                "$ref":  "#/definitions/Response"
+                }
+            }
+          }
+        }
+      },
+      "/comment/delete/:id": {
+        "parameters": [
+          {
+            "name": "Delete Comment"
+          }
+        ],
+        "delete": {
+          "tags": ["Delete Comment"],
+          "responses": {
+            "200": {
+              "description": "Successful",
+              "schema": {
+                "$ref":  "#/definitions/Response"
+                }
+            }
+          }
+        }
       }
   },
   "definitions": {
@@ -200,6 +724,22 @@
                 "example": "6NNY7VUOMPJM"
             }
         }
+    },
+    "Update Profile":{
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "example":"John Doe"
+        },
+        "email":{
+          "type": "string",
+          "example": "john@mail.com"
+        },
+        "profilePicture": {
+          "type": "string",
+          "example": "https://static.vecteezy.com/system/resources/previews/013/042/571/original/default-avatar-profile-icon-social-media-user-photo-in-flat-style-vector.jpg"
+        }
+      }
     },
     "School Signup Details": {
       "properties":{

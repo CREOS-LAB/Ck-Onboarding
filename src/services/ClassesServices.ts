@@ -27,8 +27,8 @@ export class ClassServices{
         return result
     }
 
-    async getAll(){
-        let result = await this.classes.find()
+    async getAll(schoolId: string){
+        let result = await this.classes.find({school: schoolId})
         return result
     }
 }

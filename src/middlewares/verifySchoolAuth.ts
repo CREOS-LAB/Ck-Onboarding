@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import Student from "../models/students.model";
+import School from "../models/schools.model";
 
 const jwtSecret: string = String(process.env.JWT_SECRET);
-const verifyAuth = async (req: any, res: Response, next: NextFunction)=>{
-    // const {authorization} = req.headers;
-    // const token = authorization.replace("Bearer ", "")
+const verifySchoolAuth = async (req: any, res: Response, next: NextFunction)=>{
     const {token} = req.cookies
     
     if (!token){
@@ -14,10 +13,11 @@ const verifyAuth = async (req: any, res: Response, next: NextFunction)=>{
     try{
         req.user = jwt.verify(token, jwtSecret)
         let {_id} = req.user;
-        let user = await Student.findById(_id);
+        let user = await School.findById(_id);
         if(!user){
             return res.status(404).json({message: 'User Not Found'})
         }
+        req.user = jwt.verify(token, jwtSecret)
         next()
     }
     catch(err: any){
@@ -25,4 +25,4 @@ const verifyAuth = async (req: any, res: Response, next: NextFunction)=>{
     }
 }
 
-export default verifyAuth
+export default verifySchoolAuth
