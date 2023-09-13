@@ -15,6 +15,7 @@ import { ClassController } from './controllers/ClassesController';
 import { VideosController } from './controllers/VideosController';
 import { CommentsController } from './controllers/CommentsController';
 import verifySchoolAuth from './middlewares/verifySchoolAuth';
+import teacherControllers from './controllers/TeachersController';
 const swaggerDocument = require('../swagger.json');
 
 require("dotenv").config()
@@ -66,6 +67,7 @@ connection.once('open', ()=>{console.log('Database running Successfully')});
 app.get('/', (req, res) => {
 res.sendFile(process.cwd() + '/public/index.html');
 });
+app.use('/upload', express.static('upload'));
 
 //students route
 const studentsController = Container.get(StudentsControllers);
@@ -79,16 +81,24 @@ app.patch("/student/update", verifyAuth, (req: Request, res: Response, next: Nex
 app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
 app.get("/students/leadership?limit=10", (req: Request, res: Response, next: NextFunction)=>studentsController.leaderBoard(req, res))
 
+//teachers route;
+const teachersController = Container.get(teacherControllers);
+app.get("/teacher/", verifyAuth, (req: Request, res: Response, next: NextFunction)=>teachersController.getLoggedInTeacher(req, res,next))
+app.post("/teacher/sign-up", (req: Request, res: Response)=>teachersController.signUp(req, res))
+app.post("/teacher/sign-in", (req: Request, res: Response)=>teachersController.signIn(req, res))
+app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teachersController.getTeacherById(req, res,next))
+
+
 //schools route
 const schoolController = Container.get(SchoolsController);
-app.get("/school/", verifyAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.getLoggedInSchool(req, res,next))
+app.get("/school/", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.getLoggedInSchool(req, res,next))
 app.post("/school/sign-up", (req: Request, res: Response)=>schoolController.signUp(req, res))
 app.post("/school/sign-in", (req: Request, res: Response)=>schoolController.signIn(req, res))
 app.get("/school/:id", (req: Request, res: Response, next: NextFunction)=>schoolController.getSchoolById(req, res,next))
 app.get("/school/email/:email", (req: Request, res: Response, next: NextFunction)=>schoolController.getSchoolByEmail(req, res,next))
 app.post("/logout", (req: Request, res: Response, next: NextFunction)=>schoolController.logout(req, res,next))
-app.patch("/school/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.updateSchool(req, res,next))
-app.delete("/school/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.deleteSchool(req, res,next))
+app.patch("/school/update", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.updateSchool(req, res,next))
+app.delete("/school/delete", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.deleteSchool(req, res,next))
       
 
 // Collections route
@@ -131,6 +141,7 @@ app.patch("/comment/:id", (req: Request, res: Response, next: NextFunction)=>com
 app.get("/comment/:videoId", (req: Request, res: Response, next: NextFunction)=>commentsController.getCommentsByVideo(req, res, next))
 app.post("/comment", (req: Request, res: Response, next: NextFunction)=>commentsController.create(req, res, next))
 
+//6501938f9df5e3c94892ace2
 
 
 // Run Server

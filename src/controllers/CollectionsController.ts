@@ -3,6 +3,7 @@ import "reflect-metadata"
 import { reject, resolve } from "../utils/reponseService";
 import { NextFunction, Request, Response } from "express";
 import { CollectionServices } from "../services/CollectionServices";
+import { uploader } from "../utils/uploader";
 
 
 @Service()
@@ -13,6 +14,7 @@ export class CollectionsController{
     async create(req: Request, res: Response, next: NextFunction){
         try{
             let data = req.body;
+            data.cover = uploader(data.cover)
             let result = await this.collectionServices.save(data);
             resolve("Successful", result, 200, res)
         }
