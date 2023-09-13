@@ -4,7 +4,8 @@ const schema = new Schema({
     title: {type: String, required: true},
     description: {type: String, required: true},
     cover: {type: String, required: true},
-    class: {type: Schema.Types.ObjectId, required: false}
+    class: {type: Schema.Types.ObjectId, required: false},
+    category: {type: String, required: true}
 },
 {
     timestamps: true
