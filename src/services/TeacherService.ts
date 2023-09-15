@@ -6,18 +6,22 @@ import { ProductKeyService } from "./ProductKeyServices";
 import { SchoolsServices } from "./SchoolsServices";
 import Teacher from "../models/teachers.model";
 import { LoginDto } from "../dto/studentDTO";
+import EmailService from "./EmailService";
 
 @Service()
 export class TeacherServices{
     constructor(
         private readonly teacher = Teacher,
         private readonly productKey : ProductKeyService,
-        private readonly schoolServices : SchoolsServices
+        private readonly schoolServices : SchoolsServices,
+        private readonly emailService : EmailService
         ){
 
     }
 
     async signUp(data: any){
+        data.password =""
+        this.emailService.sendTeacherSignUpDetails(data.email, data.password)
         data.password = await encodePassword(data.password);
         const teacher = await new this.teacher(data).save()
         return {

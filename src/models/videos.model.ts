@@ -2,6 +2,7 @@ import mongoose, {Schema, Types} from "mongoose"
 
 const schema = new Schema({
     name: {type: String, required: true},
+    description: {type: String, required: false},
     link: {type: String, required: true},
     collectionRelation: {type: Schema.Types.ObjectId, ref: "Collections", required: false},
     views: {type: Number, default: 0},

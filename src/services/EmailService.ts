@@ -46,12 +46,26 @@ class EmailService{
                 <h3> Welcome to Curious Kids </h3>
                 <p> Here are you details </p>
                 <p>email: ${email} </p>
-                <p>password: ${password} </p>
                 <p>product key: ${productKey} </p>
             </div>
         `
         }
         html = html(email, password, productKey)
+        this.mail(email, "Emmy", "Welcome to Curious Kids", html)
+    }
+
+    async sendTeacherSignUpDetails(email: string, password: string){
+        let html: any = (email: string, password: string)=>{
+            return `
+            <div>
+                <h3> Welcome to Curious Kids </h3>
+                <p> Here are you details </p>
+                <p>email: ${email} </p>
+                <p>password: ${password} </p>
+            </div>
+        `
+        }
+        html = html(email, password)
         this.mail(email, "Emmy", "Welcome to Curious Kids", html)
     }
 }

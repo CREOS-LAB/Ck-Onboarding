@@ -128,7 +128,7 @@ app.get("/videos", (req: Request, res: Response, next: NextFunction)=>videosCont
 app.get("/video/:id", (req: Request, res: Response, next: NextFunction)=>videosController.getVideoById(req, res, next))
 app.delete("/video/delete/:id", (req: Request, res: Response, next: NextFunction)=>videosController.deleteVideo(req, res, next))
 app.patch("/video/update/:id", (req: Request, res: Response, next: NextFunction)=>videosController.updateVideo(req, res, next))
-app.get("/video/:collectionId", (req: Request, res: Response, next: NextFunction)=>videosController.getVideosByCollection(req, res, next))
+app.get("/video/by-collection/:collectionId", (req: Request, res: Response, next: NextFunction)=>videosController.getVideosByCollection(req, res, next))
 app.post("/video", (req: Request, res: Response, next: NextFunction)=>videosController.create(req, res, next))
 
 //Comments route
