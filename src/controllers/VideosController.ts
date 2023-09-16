@@ -4,6 +4,7 @@ import { reject, resolve } from "../utils/reponseService";
 import { NextFunction, Request, Response } from "express";
 import { VideosServices } from "../services/VideoServices";
 import { uploader } from "../utils/uploader";
+import { upload } from "../utils/cloudinary";
 
 
 @Service()
@@ -14,7 +15,7 @@ export class VideosController{
     async create(req: Request, res: Response, next: NextFunction){
         try{
             let data = req.body;
-            data.cover = uploader(data.cover)
+            data.cover = await upload(data.cover.base64)
             let result = await this.videosServices.save(data);
             resolve("Successful", result, 200, res)
         }

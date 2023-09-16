@@ -7,6 +7,7 @@ import { SchoolsServices } from "./SchoolsServices";
 import Teacher from "../models/teachers.model";
 import { LoginDto } from "../dto/studentDTO";
 import EmailService from "./EmailService";
+import { generatePassword } from "../utils/generatePassword";
 
 @Service()
 export class TeacherServices{
@@ -20,7 +21,7 @@ export class TeacherServices{
     }
 
     async signUp(data: any){
-        data.password =""
+        data.password = generatePassword()
         this.emailService.sendTeacherSignUpDetails(data.email, data.password)
         data.password = await encodePassword(data.password);
         const teacher = await new this.teacher(data).save()

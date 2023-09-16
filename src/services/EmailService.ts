@@ -62,6 +62,7 @@ class EmailService{
                 <p> Here are you details </p>
                 <p>email: ${email} </p>
                 <p>password: ${password} </p>
+                <p>click here to <a href="https://ck-kids-dashboard.vercel.app/teachers-signin"> login </a> </p>
             </div>
         `
         }

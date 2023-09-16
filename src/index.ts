@@ -83,6 +83,7 @@ app.get("/students/leadership?limit=10", (req: Request, res: Response, next: Nex
 
 //teachers route;
 const teachersController = Container.get(teacherControllers);
+
 app.get("/teacher/", verifyAuth, (req: Request, res: Response, next: NextFunction)=>teachersController.getLoggedInTeacher(req, res,next))
 app.post("/teacher/sign-up", (req: Request, res: Response)=>teachersController.signUp(req, res))
 app.post("/teacher/sign-in", (req: Request, res: Response)=>teachersController.signIn(req, res))
