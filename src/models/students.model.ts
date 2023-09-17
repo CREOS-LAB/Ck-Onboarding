@@ -17,7 +17,8 @@ const schema = new Schema({
     stage: {type: String},
     badges: {type: String},
     achievement: {type: String},
-    streak: {type: Number, default: 0}
+    streak: {type: Number, default: 0},
+    age: {type: Number}
     },
     {
         timestamps: true

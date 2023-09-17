@@ -51,16 +51,19 @@ export class VideosServices{
         const regex = /(\d+)\s*-\s*(\d+)/;
 
         // Use regex to extract the numbers
-        const match = data.ageRange.match(regex);
+        if(data.ageRange){
+             const match = data.ageRange.match(regex);
 
         if (match) {
             // match[1] contains the first number, and match[2] contains the last number
             data.minAge = parseInt(match[1]);
             data.maxAge = parseInt(match[2]);
-            
+
         } else {
             console.log("No valid range found in the input string.");
         }
+        }
+       
 
         let totalQuery = Object.fromEntries(
             Object.entries(data).filter(([key, value]) => value !== undefined)
