@@ -34,6 +34,17 @@ export class VideosController{
         }
     }
 
+    async queryVideos(req: Request, res: Response, next: NextFunction){
+        try{
+            let data = req.body;
+            let result = await this.videosServices.queryVideos(data)
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
     async getVideoById(req: Request, res: Response, next: NextFunction){
         try{
             let {id} = req.params;

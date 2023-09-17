@@ -46,19 +46,18 @@ export class VideosServices{
         return result
     }
 
-    async queryVideos(ageRange: string, data: any){
+    async queryVideos( data: any){
         // Define a regular expression to match numbers
         const regex = /(\d+)\s*-\s*(\d+)/;
 
         // Use regex to extract the numbers
         const match = data.ageRange.match(regex);
-        let minAge;
-        let maxAge;
 
         if (match) {
             // match[1] contains the first number, and match[2] contains the last number
             data.minAge = parseInt(match[1]);
             data.maxAge = parseInt(match[2]);
+            
         } else {
             console.log("No valid range found in the input string.");
         }
