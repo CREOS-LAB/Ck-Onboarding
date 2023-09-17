@@ -7,7 +7,15 @@ export class CollectionServices{
     constructor(private readonly collection = Collections){
     }
 
-    async save(data: object){
+    async save(data: any){
+        // Define a regular expression to match numbers
+        const regex = /(\d+)\s*-\s*(\d+)/;
+
+        // Use regex to extract the numbers
+        const match = data.ageRange.match(regex);
+
+        data.minAge = parseInt(match[1]);
+        data.maxAge = parseInt(match[2]);
         let result = await new this.collection(data).save()
         return result
     }
