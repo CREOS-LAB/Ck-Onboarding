@@ -48,7 +48,11 @@ export class VideosController{
     async getStudentsVideos(req: any, res: Response, next: NextFunction){
         try{
             let student = req.user;
-            let query = {}
+            let query = {
+                minAge: { $gte : student.age },
+                maxAge: { $lte : student.age},
+            }
+            
             let result = await this.videosServices.queryVideos(query)
             resolve("Successful", result, 200, res)
         }
