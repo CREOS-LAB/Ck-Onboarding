@@ -116,6 +116,16 @@ class StudentsControllers{
             reject(err.message, 400, res)
         }
     }
+
+    async getAll(req: Request, res: Response){
+        try{
+            let result = await this.studentsServices.getAllStudents()
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
 }
 
 export interface ResponseInterface{

@@ -8,8 +8,8 @@ const schema = new Schema({
     views: {type: Number, default: 0},
     watched: {type: Number, default: 0},
     cover: {type: String, required: true},
-    maxAge: {type: Number, required: true},
-    minAge: {type: Number, required: true},
+    maxAge: {type: Number, required: false},
+    minAge: {type: Number, required: false},
     category: {type: String, required: true},
 },
 {

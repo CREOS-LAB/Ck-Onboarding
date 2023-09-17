@@ -100,6 +100,7 @@ app.post("/logout", (req: Request, res: Response, next: NextFunction)=>studentsC
 app.patch("/student/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res,next))
 app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
 app.get("/students/leadership?limit=10", (req: Request, res: Response, next: NextFunction)=>studentsController.leaderBoard(req, res))
+app.get("/students/all", (req: Request, res: Response, next: NextFunction)=> studentsController.getAll(req, res))
 
 //teachers route;
 const teachersController = Container.get(teacherControllers);

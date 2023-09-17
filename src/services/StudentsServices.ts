@@ -110,4 +110,18 @@ export class StudentServices{
         let students = await this.student.find().limit(limit).sort({gem: 1});
         return students;
     }
+
+    async getStudentsBySchool(schoolId: string){
+        let students = await this.student.find({school: schoolId})
+        return students
+    }
+
+    async getAllStudents(){
+        let students = await this.student.find()
+        return {
+            payload: students,
+            message: "Successfully",
+            status: 200
+        }
+    }
 }
