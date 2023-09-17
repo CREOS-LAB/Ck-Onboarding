@@ -118,10 +118,6 @@ export class StudentServices{
 
     async getAllStudents(){
         let students = await this.student.find()
-        return {
-            payload: students,
-            message: "Successfully",
-            status: 200
-        }
+        return students
     }
 }
