@@ -44,7 +44,7 @@ class EmailService{
             return `
             <div>
                 <h3> Welcome to Curious Kids </h3>
-                <p> Here are you details </p>
+                <p> Here are your details </p>
                 <p>email: ${email} </p>
                 <p>product key: ${productKey} </p>
             </div>
@@ -59,7 +59,7 @@ class EmailService{
             return `
             <div>
                 <h3> Welcome to Curious Kids </h3>
-                <p> Here are you details </p>
+                <p> Here are your details </p>
                 <p>email: ${email} </p>
                 <p>password: ${password} </p>
                 <p>click here to <a href="https://ck-kids-dashboard.vercel.app/teachers-signin"> login </a> </p>
@@ -67,6 +67,20 @@ class EmailService{
         `
         }
         html = html(email, password)
+        this.mail(email, "Emmy", "Welcome to Curious Kids", html)
+    }
+
+    async sendInviteToStudent(email: string, productKey: string){
+        let html: any = ()=>{
+            return `
+            <div>
+                <h3> Welcome to Curious Kids </h3>
+                <p>Hi, You've been invited to <a href="https://ck-kids-dashboard.vercel.app"> Curious Kids </a> </p>\<p>Product Key: ${productKey} </p>
+                <p>click here to <a href="https://ck-kids-dashboard.vercel.app/teachers-signin"> get started </a> </p>
+            </div>
+        `
+        }
+        html = html()
         this.mail(email, "Emmy", "Welcome to Curious Kids", html)
     }
 }

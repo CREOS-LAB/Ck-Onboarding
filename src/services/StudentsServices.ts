@@ -6,13 +6,15 @@ import generateToken from "../utils/generateToken";
 import { Response } from "express";
 import { ProductKeyService } from "./ProductKeyServices";
 import { SchoolsServices } from "./SchoolsServices";
+import { UploadedStudentServices } from "./UploadedStudentServices";
 
 @Service()
 export class StudentServices{
     constructor(
         private readonly student = Student,
         private readonly productKey : ProductKeyService,
-        private readonly schoolServices : SchoolsServices
+        private readonly schoolServices : SchoolsServices,
+        private readonly uploadedStudents : UploadedStudentServices
         ){
 
     }
@@ -23,7 +25,26 @@ export class StudentServices{
         let status = await this.productKey.validateKey(data.productKey)
         data.school = await this.schoolServices.getSchoolByKey(data.productKey)
         //validate key
-        if(!status){
+        const uploadedData:any = await this.uploadedStudents.getuploadedStudentByEmail(data.email)
+
+        console.log(uploadedData)
+        if(uploadedData === null){
+            return{
+                payload: null,
+                message: "You've no access",
+                status: 401
+            }
+        }
+        else if(data.productKey != uploadedData.productKey){
+            return{
+                payload: null,
+                message: "Invalid Product Key",
+                status: 401
+            }
+        }
+
+        
+        else if(!status){
             return{
                 payload: null,
                 message: "Invalid Product Key",

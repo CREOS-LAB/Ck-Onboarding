@@ -30,11 +30,11 @@ export class SchoolsController{
     async signIn(req: Request, res: Response){
         try{
             const data: LoginDto = req.body;
-            let result: ResponseInterface = await this.schoolServices.signIn(data);
+            let result: ResponseInterface = await this.schoolServices.signIn(data, res);
             if(result.payload){
                 generateToken(result.payload._id, result.payload.email, res)
             }
-            resolve(result.message, result.payload, 200, res)
+            resolve(result.message, result.payload, result.status, res)
         }
         catch(err: any){
             reject(err.message, 400, res)

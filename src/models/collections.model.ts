@@ -5,7 +5,9 @@ const schema = new Schema({
     description: {type: String, required: true},
     cover: {type: String, required: true},
     class: {type: Schema.Types.ObjectId, required: false},
-    category: {type: String, required: true}
+    category: {type: String, required: true},
+    maxAge: {type: Number, required: true},
+    minAge: {type: Number, required: true}
 },
 {
     timestamps: true

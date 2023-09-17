@@ -24,7 +24,7 @@ export class UploadedStudentServices{
     }
 
     async getuploadedStudentByEmail(email: string){
-        let uploadedStudent = await this.uploadedStudent.findOne({email})
+        let uploadedStudent = await this.uploadedStudent.findOne({email}).populate("productKey")
         return uploadedStudent
     }
 }

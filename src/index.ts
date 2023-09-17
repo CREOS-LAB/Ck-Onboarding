@@ -16,7 +16,27 @@ import { VideosController } from './controllers/VideosController';
 import { CommentsController } from './controllers/CommentsController';
 import verifySchoolAuth from './middlewares/verifySchoolAuth';
 import teacherControllers from './controllers/TeachersController';
+import UploadedStudentControllers from './controllers/UploadedStudentController';
 const swaggerDocument = require('../swagger.json');
+import multer from "multer"
+import * as path from "path"
+
+// Configure Multer to store files with their original names and extensions
+const storage = multer.diskStorage({
+  destination: 'uploads-excel/', // Set your destination folder
+  filename: (req, file, callback) => {
+    // Extract the file extension from the original filename
+    const fileExt = path.extname(file.originalname);
+
+    // Generate a unique filename (you can use a library like `uuid` for this)
+    const uniqueFilename = `${Date.now()}${fileExt}`;
+
+    // Callback with the new filename
+    callback(null, uniqueFilename);
+  },
+});
+
+const upload = multer({storage})
 
 require("dotenv").config()
 
@@ -89,6 +109,9 @@ app.post("/teacher/sign-up", (req: Request, res: Response)=>teachersController.s
 app.post("/teacher/sign-in", (req: Request, res: Response)=>teachersController.signIn(req, res))
 app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teachersController.getTeacherById(req, res,next))
 
+//Upload data;
+const uploadData = Container.get(UploadedStudentControllers)
+app.post("/upload-student", verifySchoolAuth ,upload.single("file") ,(req: Request, res:Response, next: NextFunction)=> uploadData.uploadStudents(req, res, next))
 
 //schools route
 const schoolController = Container.get(SchoolsController);

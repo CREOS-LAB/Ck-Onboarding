@@ -7,7 +7,16 @@ export class VideosServices{
     constructor(private readonly videos = Videos){
     }
 
-    async save(data: object){
+    async save(data: any){
+        // Define a regular expression to match numbers
+        const regex = /(\d+)\s*-\s*(\d+)/;
+
+        // Use regex to extract the numbers
+        const match = data.ageRange.match(regex);
+
+        data.minAge = parseInt(match[1]);
+        data.maxAge = parseInt(match[2]);
+
         let result = await new this.videos(data).save()
         return result
     }
@@ -34,6 +43,31 @@ export class VideosServices{
 
     async getAll(){
         let result = await this.videos.find()
+        return result
+    }
+
+    async queryVideos(ageRange: string, data: any){
+        // Define a regular expression to match numbers
+        const regex = /(\d+)\s*-\s*(\d+)/;
+
+        // Use regex to extract the numbers
+        const match = data.ageRange.match(regex);
+        let minAge;
+        let maxAge;
+
+        if (match) {
+            // match[1] contains the first number, and match[2] contains the last number
+            data.minAge = parseInt(match[1]);
+            data.maxAge = parseInt(match[2]);
+        } else {
+            console.log("No valid range found in the input string.");
+        }
+
+        let totalQuery = Object.fromEntries(
+            Object.entries(data).filter(([key, value]) => value !== undefined)
+          );
+
+        let result = await this.videos.find(totalQuery).exec()
         return result
     }
 }

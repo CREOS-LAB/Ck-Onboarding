@@ -4,6 +4,8 @@ import { comparePassword, encodePassword } from "../config/bcrypt";
 import { LoginDto } from "../dto/studentDTO";
 import "reflect-metadata"
 import EmailService from "./EmailService";
+import generateToken from "../utils/generateToken";
+import { Response } from "express";
 
 @Service()
 export class SchoolsServices{
@@ -27,7 +29,7 @@ export class SchoolsServices{
         }
     }
 
-    async signIn(data: LoginDto){
+    async signIn(data: LoginDto, res: Response){
         let school: any = await this.model.findOne({email: data.email})
         if(!school){
             return{
@@ -46,8 +48,9 @@ export class SchoolsServices{
             }
         }
 
+        let token = generateToken(school._id, school.email, res)
         return {
-            payload: school,
+            payload: {school, token},
             message: "Login Successful",
             status: 200
         }
