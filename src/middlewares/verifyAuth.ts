@@ -18,6 +18,7 @@ const verifyAuth = async (req: any, res: Response, next: NextFunction)=>{
         if(!user){
             return res.status(404).json({message: 'User Not Found'})
         }
+        req.user = user
         next()
     }
     catch(err: any){

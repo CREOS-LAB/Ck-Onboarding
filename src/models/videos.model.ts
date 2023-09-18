@@ -10,7 +10,7 @@ const schema = new Schema({
     cover: {type: String, required: true},
     maxAge: {type: Number, required: false},
     minAge: {type: Number, required: false},
-    category: {type: String, required: true},
+    category: {type: String, required: false},
 },
 {
     timestamps: true
