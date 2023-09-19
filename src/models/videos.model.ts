@@ -7,7 +7,7 @@ const schema = new Schema({
     collectionRelation: {type: Schema.Types.ObjectId, ref: "Collections", required: false},
     views: {type: Number, default: 0},
     watched: {type: Number, default: 0},
-    cover: {type: String, required: false},
+    cover: {type: String, required: false, default: "https://education-ga.ketcloud.ket.org/wp-content/uploads/letslearn.jpg"},
     maxAge: {type: Number, required: false},
     minAge: {type: Number, required: false},
     category: {type: String, required: false},

@@ -157,7 +157,7 @@ app.get("/video/by-collection/:collectionId", (req: Request, res: Response, next
 app.post("/video", (req: Request, res: Response, next: NextFunction)=>videosController.create(req, res, next))
 app.post("/videos/query", (req: Request, res: Response, next: NextFunction)=>videosController.queryVideos(req, res, next))
 app.get("/videos/student", verifyAuth, (req: Request, res: Response, next: NextFunction)=>videosController.getStudentsVideos(req, res, next))
-app.get("/videos/bulk-upload", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload(req, res, next))
+app.post("/videos/bulk-upload", (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload(req, res, next))
 
 //Comments route
 const commentsController = Container.get(CommentsController);

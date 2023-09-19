@@ -106,21 +106,20 @@ export class VideosController{
         }
     }
 
-    async bulkUpload(req: any, res: Response, next: NextFunction){
+    async bulkUpload(req: Request, res: Response, next: NextFunction){
         try{
+            const data: VideoToUpload = req.body
 
-            // Assuming you receive the Base64 data as a string from the client
-            let school = req.user
-            let filePath = req.file.path
-
-            const workbook = xlsx.readFile(filePath);
-            const sheetName = workbook.Sheets[workbook.SheetNames[0]] // Assuming you have a single sheet
-                
-            // // console.log(sheetName)
-            const data = xlsx.utils.sheet_to_json(sheetName);
-
-            data.forEach((video: any)=>{
-               this.videosServices.save(video) 
+            let videos: String[] = data.videos.split(/,|,\s*|\s+/);
+            videos = videos.filter(url => url.trim() !== '');
+            
+            videos.forEach((video: any)=>{
+                let item: any = {};
+                item.link = video
+                item.ageRange = data.ageRange
+                item.category = data.category
+                console.log(video)
+                this.videosServices.save(item) 
             })
             let result = {
                 message: "Uploaded Successfully",
@@ -133,4 +132,10 @@ export class VideosController{
             reject(err.message, 400, res)
         }
     }
+}
+
+interface VideoToUpload{
+    videos: String,
+    ageRange: String,
+    category: String
 }

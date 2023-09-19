@@ -10,7 +10,8 @@ export class VideosServices{
     async save(data: any){
         // Define a regular expression to match numbers
         const regex = /(\d+)\s*-\s*(\d+)/;
-
+        console.log(data)
+        
         if(data.ageRange){
             const match = data.ageRange.match(regex);
 
