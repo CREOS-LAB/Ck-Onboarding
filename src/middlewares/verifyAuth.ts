@@ -6,7 +6,7 @@ const jwtSecret: string = String(process.env.JWT_SECRET);
 
 const verifyAuth = async (req: any, res: Response, next: NextFunction)=>{
     const {authorization} = req.headers;
-    let token = req.cookies.token || authorization.replace("Bearer ", "")
+    let token = req.cookies.token || authorization?.replace("Bearer ", "")
 
     
     if (!token){
