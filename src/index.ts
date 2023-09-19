@@ -45,25 +45,26 @@ const port =  process.env.PORT || 3020;
       
 // Set up your routes and middleware here
 // app.use(cors({
-  // app.use(cors({
-  //   origin: "*"
-  // }));
+  app.use(cors({
+    origin: ['https://ck-kids-dashboard.vercel.app', 'http://localhost:3000'],
+    credentials: true,
+  }));
 
-const allowedOrigins = ['http://localhost:3000', "https://ck-kids-dashboard.vercel.app"];
+// const allowedOrigins = ['http://localhost:3000', "https://ck-kids-dashboard.vercel.app"];
 
 
-// Enable CORS and allow credentials
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const origin = req.headers.origin;
+// // Enable CORS and allow credentials
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   const origin = req.headers.origin;
   
-  // Check if the origin is in the allowedOrigins array
-  if (allowedOrigins.includes(String(origin))) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-csrf-token');
-  }
-  next();
-});
+//   // Check if the origin is in the allowedOrigins array
+//   if (allowedOrigins.includes(String(origin))) {
+//     res.header('Access-Control-Allow-Origin', origin);
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-csrf-token');
+//   }
+//   next();
+// });
 
 app.use(express.urlencoded({limit:"50mb",extended: false}))
 app.use(express.json({limit:"50mb"}))
@@ -111,7 +112,7 @@ app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teach
 
 //Upload data;
 const uploadData = Container.get(UploadedStudentControllers)
-app.post("/upload-student", verifySchoolAuth, upload.single("file") ,(req: Request, res:Response, next: NextFunction)=> uploadData.uploadStudents(req, res, next))
+app.post("/upload-student", verifySchoolAuth ,upload.single("file") ,(req: Request, res:Response, next: NextFunction)=> uploadData.uploadStudents(req, res, next))
 
 //schools route
 const schoolController = Container.get(SchoolsController);
@@ -156,6 +157,8 @@ app.get("/video/by-collection/:collectionId", (req: Request, res: Response, next
 app.post("/video", (req: Request, res: Response, next: NextFunction)=>videosController.create(req, res, next))
 app.post("/videos/query", (req: Request, res: Response, next: NextFunction)=>videosController.queryVideos(req, res, next))
 app.get("/videos/student", verifyAuth, (req: Request, res: Response, next: NextFunction)=>videosController.getStudentsVideos(req, res, next))
+app.get("/videos/bulk-upload", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload(req, res, next))
+
 //Comments route
 const commentsController = Container.get(CommentsController);
 

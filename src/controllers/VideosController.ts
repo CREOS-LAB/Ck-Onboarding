@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from "express";
 import { VideosServices } from "../services/VideoServices";
 import { uploader } from "../utils/uploader";
 import { upload } from "../utils/cloudinary";
-
+import * as xlsx from "xlsx"
 
 @Service()
 export class VideosController{
@@ -100,6 +100,34 @@ export class VideosController{
             const {_id} = req.user;
             let result = await this.videosServices.delete(_id);
             resolve("Deleted Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async bulkUpload(req: any, res: Response, next: NextFunction){
+        try{
+
+            // Assuming you receive the Base64 data as a string from the client
+            let school = req.user
+            let filePath = req.file.path
+
+            const workbook = xlsx.readFile(filePath);
+            const sheetName = workbook.Sheets[workbook.SheetNames[0]] // Assuming you have a single sheet
+                
+            // // console.log(sheetName)
+            const data = xlsx.utils.sheet_to_json(sheetName);
+
+            data.forEach((video: any)=>{
+               this.videosServices.save(video) 
+            })
+            let result = {
+                message: "Uploaded Successfully",
+                payload: null,
+                status: 200
+            }
+            resolve(result.message, result.payload, result.status, res)
         }
         catch(err: any){
             reject(err.message, 400, res)
