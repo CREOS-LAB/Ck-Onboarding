@@ -6,6 +6,7 @@ import School from "../models/schools.model";
 const jwtSecret: string = String(process.env.JWT_SECRET);
 const verifySchoolAuth = async (req: any, res: Response, next: NextFunction)=>{
     const {token} = req.cookies
+    console.log(req.cookies)
     
     if (!token){
         return res.status(403).json({message: 'Unauthorized'})

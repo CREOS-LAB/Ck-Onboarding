@@ -112,7 +112,7 @@ app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teach
 
 //Upload data;
 const uploadData = Container.get(UploadedStudentControllers)
-app.post("/upload-student", verifySchoolAuth ,upload.single("file") ,(req: Request, res:Response, next: NextFunction)=> uploadData.uploadStudents(req, res, next))
+app.post("/upload-student", verifySchoolAuth, upload.single("file") ,(req: Request, res:Response, next: NextFunction)=> uploadData.uploadStudents(req, res, next))
 
 //schools route
 const schoolController = Container.get(SchoolsController);
