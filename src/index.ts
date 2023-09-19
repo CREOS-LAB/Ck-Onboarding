@@ -158,6 +158,8 @@ app.post("/video", (req: Request, res: Response, next: NextFunction)=>videosCont
 app.post("/videos/query", (req: Request, res: Response, next: NextFunction)=>videosController.queryVideos(req, res, next))
 app.get("/videos/student", verifyAuth, (req: Request, res: Response, next: NextFunction)=>videosController.getStudentsVideos(req, res, next))
 app.post("/videos/bulk-upload", (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload(req, res, next))
+app.patch("/video/watch/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.watchVideo(req, res, next))
+app.patch("/video/view/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.viewVideo(req, res, next))
 
 //Comments route
 const commentsController = Container.get(CommentsController);

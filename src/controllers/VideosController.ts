@@ -132,6 +132,40 @@ export class VideosController{
             reject(err.message, 400, res)
         }
     }
+
+    async watchVideo(req: any, res: Response, next: NextFunction){
+        try{
+            const {id} = req.params;
+            const student = req.user;
+            let video = await this.videosServices.getById(id)
+            let index = video?.watched.indexOf(student._id)
+
+            if(index === -1){
+                video?.watched.push(student._id)
+            }
+            
+            this.videosServices.update(id, video);
+            resolve("Successful", null, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async viewVideo(req: any, res: Response, next: NextFunction){
+        try{
+            const {id} = req.params;
+            const student = req.user;
+            let video = await this.videosServices.getById(id)
+            video?.views.push(student)
+
+            this.videosServices.update(id, video);
+            resolve("Successful", null, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
 }
 
 interface VideoToUpload{
