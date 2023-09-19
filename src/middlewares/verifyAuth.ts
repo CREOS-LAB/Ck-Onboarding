@@ -3,10 +3,11 @@ import * as jwt from "jsonwebtoken";
 import Student from "../models/students.model";
 
 const jwtSecret: string = String(process.env.JWT_SECRET);
+
 const verifyAuth = async (req: any, res: Response, next: NextFunction)=>{
-    // const {authorization} = req.headers;
-    // const token = authorization.replace("Bearer ", "")
-    const {token} = req.cookies
+    const {authorization} = req.headers;
+    let token = req.cookies.token || authorization.replace("Bearer ", "")
+
     
     if (!token){
         return res.status(403).json({message: 'Unauthorized'})

@@ -5,12 +5,14 @@ import School from "../models/schools.model";
 
 const jwtSecret: string = String(process.env.JWT_SECRET);
 const verifySchoolAuth = async (req: any, res: Response, next: NextFunction)=>{
-    const {token} = req.cookies
-    console.log(req.cookies)
+
+    const {authorization} = req.headers;
+    let token = req.cookies.token || authorization.replace("Bearer ", "")
     
     if (!token){
         return res.status(403).json({message: 'Unauthorized'})
     }
+    
     try{
         req.user = jwt.verify(token, jwtSecret)
         let {_id} = req.user;
