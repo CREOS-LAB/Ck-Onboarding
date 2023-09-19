@@ -85,7 +85,7 @@ export class VideosController{
 
     async updateVideo(req: any, res: Response, next: NextFunction){
         try{
-            const {_id} = req.user;
+            const {_id} = req.params;
             const {password, ...data} = req.body;
             let result = await this.videosServices.update(_id, data);
             resolve("Update Successful", result, 200, res)
@@ -97,7 +97,7 @@ export class VideosController{
 
     async deleteVideo(req: any, res: Response, next: NextFunction){
         try{
-            const {_id} = req.user;
+            const {_id} = req.params;
             let result = await this.videosServices.delete(_id);
             resolve("Deleted Successful", result, 200, res)
         }
