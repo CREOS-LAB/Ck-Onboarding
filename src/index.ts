@@ -46,8 +46,7 @@ const port =  process.env.PORT || 3020;
 // Set up your routes and middleware here
 // app.use(cors({
   app.use(cors({
-    origin: ['https://ck-kids-dashboard.vercel.app', 'http://localhost:3000', "*"],
-    credentials: true,
+    origin: "*"
   }));
 
 // const allowedOrigins = ['http://localhost:3000', "https://ck-kids-dashboard.vercel.app"];
