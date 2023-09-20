@@ -11,10 +11,14 @@ const schema = new Schema({
     maxAge: {type: Number, required: false},
     minAge: {type: Number, required: false},
     category: {type: String, required: false},
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Creator',
+    createdByTeacher: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher',
       },
+    createdBySchool: {
+        type: Schema.Types.ObjectId,
+        ref: 'School',
+    }
 },
 {
     timestamps: true

@@ -15,7 +15,12 @@ export class VideosController{
     async create(req: any, res: Response, next: NextFunction){
         try{
             let data = req.body;
-            data.createdBy = req.user
+            let {teacher, school} = req.query
+            if(teacher){
+                data.createdByTeacher = req.user
+            }
+            data.createdBySchool = req.user
+
             data.cover = await upload(data.cover.base64)
             let result = await this.videosServices.save(data);
             resolve("Successful", result, 200, res)
@@ -107,9 +112,14 @@ export class VideosController{
         }
     }
 
-    async bulkUpload(req: Request, res: Response, next: NextFunction){
+    async bulkUpload(req: any, res: Response, next: NextFunction){
         try{
-            const data: VideoToUpload = req.body
+            const data: any = req.body
+            let {teacher, school} = req.query
+            if(teacher){
+                data.createdByTeacher = req.user
+            }
+            data.createdBySchool = req.user
 
             let videos: String[] = data.videos.split(/,|,\s*|\s+/);
             videos = videos.filter(url => url.trim() !== '');
@@ -138,8 +148,11 @@ export class VideosController{
         try{
 
             // Assuming you receive the Base64 data as a string from the client
-            let school = req.user
+
+
             let filePath = req.file.path
+            let {teacher, school} = req.query
+            
 
             const workbook = xlsx.readFile(filePath);
             const sheetName = workbook.Sheets[workbook.SheetNames[0]] // Assuming you have a single sheet
@@ -148,6 +161,10 @@ export class VideosController{
             const data = xlsx.utils.sheet_to_json(sheetName);
 
             data.forEach((video: any)=>{
+                if(teacher){
+                    video.createdByTeacher = req.user
+                }
+                video.createdBySchool = req.user
                this.videosServices.save(video) 
             })
             let result = {

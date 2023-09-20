@@ -12,5 +12,5 @@ const schema = new Schema({
     ageRange: {type: String}
 })
 
-const Teacher = Creator.discriminator("Teacher", schema)
+const Teacher = mongoose.model("Teacher", schema)
 export default Teacher;

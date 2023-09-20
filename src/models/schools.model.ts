@@ -13,5 +13,5 @@ const schema = new Schema({
     }
 )
 
-const School = Creator.discriminator("School", schema)
+const School = mongoose.model("School", schema)
 export default School
