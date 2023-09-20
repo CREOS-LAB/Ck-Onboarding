@@ -159,7 +159,7 @@ app.post("/video", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next
 app.post("/videos/query", (req: Request, res: Response, next: NextFunction)=>videosController.queryVideos(req, res, next))
 app.get("/videos/student", verifyAuth, (req: Request, res: Response, next: NextFunction)=>videosController.getStudentsVideos(req, res, next))
 app.post("/videos/bulk-upload", verifyTeacherOrSchoolAuth ,(req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload(req, res, next))
-app.post("/videos/bulk-upload-2", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload2(req, res, next))
+app.post("/videos/bulk-upload-2", verifyTeacherOrSchoolAuth,upload.single("file"), (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload2(req, res, next))
 app.patch("/video/watch/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.watchVideo(req, res, next))
 app.patch("/video/view/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.viewVideo(req, res, next))
 
