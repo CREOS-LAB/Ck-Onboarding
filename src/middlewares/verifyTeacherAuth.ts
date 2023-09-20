@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import Student from "../models/students.model";
 import School from "../models/schools.model";
+import Teacher from "../models/teachers.model";
 
 const jwtSecret: string = String(process.env.JWT_SECRET);
 const verifySchoolAuth = async (req: any, res: Response, next: NextFunction)=>{
@@ -16,9 +17,9 @@ const verifySchoolAuth = async (req: any, res: Response, next: NextFunction)=>{
     try{
         req.user = jwt.verify(token, jwtSecret)
         let {_id} = req.user;
-        let user = await School.findById(_id);
+        let user = await Teacher.findById(_id);
         if(!user){
-            return res.status(404).json({message: 'School Not Found'})
+            return res.status(404).json({message: 'Teacher Not Found'})
         }
         req.user = user
         next()

@@ -12,9 +12,10 @@ class teacherControllers{
 
     }
 
-    async signUp(req: Request, res: Response){
+    async signUp(req: any, res: Response){
         try{
             const data = req.body;
+            data.school = req.user
             let result: ResponseInterface = await this.teacherServices.signUp(data);
             resolve(result.message, result.payload, result.status, res)
         }

@@ -12,9 +12,10 @@ export class VideosController{
     constructor(private readonly videosServices : VideosServices)
     {}
 
-    async create(req: Request, res: Response, next: NextFunction){
+    async create(req: any, res: Response, next: NextFunction){
         try{
             let data = req.body;
+            data.createdBy = req.user
             data.cover = await upload(data.cover.base64)
             let result = await this.videosServices.save(data);
             resolve("Successful", result, 200, res)
@@ -120,6 +121,34 @@ export class VideosController{
                 item.category = data.category
                 console.log(video)
                 this.videosServices.save(item) 
+            })
+            let result = {
+                message: "Uploaded Successfully",
+                payload: null,
+                status: 200
+            }
+            resolve(result.message, result.payload, result.status, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async bulkUpload2(req:any, res: Response, next: NextFunction){
+        try{
+
+            // Assuming you receive the Base64 data as a string from the client
+            let school = req.user
+            let filePath = req.file.path
+
+            const workbook = xlsx.readFile(filePath);
+            const sheetName = workbook.Sheets[workbook.SheetNames[0]] // Assuming you have a single sheet
+
+            // // console.log(sheetName)
+            const data = xlsx.utils.sheet_to_json(sheetName);
+
+            data.forEach((video: any)=>{
+               this.videosServices.save(video) 
             })
             let result = {
                 message: "Uploaded Successfully",

@@ -51,6 +51,8 @@ export class StudentServices{
                 status: 401
             }
         }
+
+        data.dob = uploadedData.dob
         const student = await new this.student(data).save()
         return {
             payload: student,

@@ -20,6 +20,7 @@ import UploadedStudentControllers from './controllers/UploadedStudentController'
 const swaggerDocument = require('../swagger.json');
 import multer from "multer"
 import * as path from "path"
+import verifyTeacherOrSchoolAuth from './middlewares/verfyTeacherOrSchool';
 
 // Configure Multer to store files with their original names and extensions
 const storage = multer.diskStorage({
@@ -154,10 +155,11 @@ app.get("/video/:id", (req: Request, res: Response, next: NextFunction)=>videosC
 app.delete("/video/delete/:id", (req: Request, res: Response, next: NextFunction)=>videosController.deleteVideo(req, res, next))
 app.patch("/video/update/:id", (req: Request, res: Response, next: NextFunction)=>videosController.updateVideo(req, res, next))
 app.get("/video/by-collection/:collectionId", (req: Request, res: Response, next: NextFunction)=>videosController.getVideosByCollection(req, res, next))
-app.post("/video", (req: Request, res: Response, next: NextFunction)=>videosController.create(req, res, next))
+app.post("/video", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>videosController.create(req, res, next))
 app.post("/videos/query", (req: Request, res: Response, next: NextFunction)=>videosController.queryVideos(req, res, next))
 app.get("/videos/student", verifyAuth, (req: Request, res: Response, next: NextFunction)=>videosController.getStudentsVideos(req, res, next))
-app.post("/videos/bulk-upload", (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload(req, res, next))
+app.post("/videos/bulk-upload", verifyTeacherOrSchoolAuth ,(req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload(req, res, next))
+app.post("/videos/bulk-upload-2", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload2(req, res, next))
 app.patch("/video/watch/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.watchVideo(req, res, next))
 app.patch("/video/view/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.viewVideo(req, res, next))
 
