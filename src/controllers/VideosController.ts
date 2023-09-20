@@ -190,8 +190,8 @@ export class VideosController{
                 video?.watched.push(student._id)
             }
             
-            this.videosServices.update(id, video);
-            resolve("Successful", null, 200, res)
+            const response = await this.videosServices.update(id, video);
+            resolve("Successful", response, 200, res)
         }
         catch(err: any){
             reject(err.message, 400, res)
@@ -205,8 +205,8 @@ export class VideosController{
             let video = await this.videosServices.getById(id)
             video?.views.push(student)
 
-            this.videosServices.update(id, video);
-            resolve("Successful", null, 200, res)
+            const response = await this.videosServices.update(id, video);
+            resolve("Successful", response, 200, res)
         }
         catch(err: any){
             reject(err.message, 400, res)
