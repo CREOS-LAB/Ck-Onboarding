@@ -19,7 +19,9 @@ export class VideosController{
             if(teacher){
                 data.createdByTeacher = req.user
             }
-            data.createdBySchool = req.user
+            else{
+                data.createdBySchool = req.user
+            }
 
             data.cover = await upload(data.cover.base64)
             let result = await this.videosServices.save(data);
@@ -116,10 +118,13 @@ export class VideosController{
         try{
             const data: any = req.body
             let {teacher, school} = req.query
+
             if(teacher){
                 data.createdByTeacher = req.user
             }
-            data.createdBySchool = req.user
+            else{
+                data.createdBySchool = req.user
+            }
 
             let videos: String[] = data.videos.split(/,|,\s*|\s+/);
             videos = videos.filter(url => url.trim() !== '');
@@ -164,7 +169,10 @@ export class VideosController{
                 if(teacher){
                     video.createdByTeacher = req.user
                 }
-                video.createdBySchool = req.user
+                else{
+                    video.createdBySchool = req.user
+                }
+                
                this.videosServices.save(video) 
             })
             let result = {
