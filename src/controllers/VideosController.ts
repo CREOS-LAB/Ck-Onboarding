@@ -203,7 +203,13 @@ export class VideosController{
             const {id} = req.params;
             const student = req.user;
             let video = await this.videosServices.getById(id)
-            video?.views.push(student)
+            let index = video?.watched.indexOf(student._id)
+
+            if(index === -1){
+                video?.watched.push(student._id)
+            }
+
+            console.log(video?.views)
 
             const response = await this.videosServices.update(id, video);
             resolve("Successful", response, 200, res)
