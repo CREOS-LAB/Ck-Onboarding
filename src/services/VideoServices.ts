@@ -66,17 +66,18 @@ export class VideosServices{
             // match[1] contains the first number, and match[2] contains the last number
             data.minAge = parseInt(match[1]);
             data.maxAge = parseInt(match[2]);
+            data.ageRange = null
 
-        } else {
-            console.log("No valid range found in the input string.");
-        }
+            } else {
+                console.log("No valid range found in the input string.");
+            }
         }
        
 
         let totalQuery = Object.fromEntries(
             Object.entries(data).filter(([key, value]) => value !== undefined)
           );
-
+        console.log(totalQuery)
         let result = await this.videos.find(totalQuery).exec()
         return result
     }
