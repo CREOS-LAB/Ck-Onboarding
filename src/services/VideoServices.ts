@@ -77,7 +77,7 @@ export class VideosServices{
         let totalQuery = Object.fromEntries(
             Object.entries(data).filter(([key, value]) => value !== undefined)
           );
-        console.log(totalQuery)
+        
         let result = await this.videos.find(totalQuery).exec()
         return result
     }
