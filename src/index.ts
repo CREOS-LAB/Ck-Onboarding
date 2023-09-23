@@ -117,7 +117,7 @@ app.post("/upload-student", verifySchoolAuth ,upload.single("file") ,(req: Reque
 
 //schools route
 const schoolController = Container.get(SchoolsController);
-app.get("/school/", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.getLoggedInSchool(req, res,next))
+app.get("/school/", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=> schoolController.getLoggedInSchool(req, res,next))
 app.post("/school/sign-up", (req: Request, res: Response)=>schoolController.signUp(req, res))
 app.post("/school/sign-in", (req: Request, res: Response)=>schoolController.signIn(req, res))
 app.get("/school/:id", (req: Request, res: Response, next: NextFunction)=>schoolController.getSchoolById(req, res,next))

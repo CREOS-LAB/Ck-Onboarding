@@ -118,8 +118,8 @@ export class StudentServices{
         return students
     }
 
-    async getAllStudents(){
-        let students = await this.student.find()
+    async getAllStudents(school: any){
+        let students = await this.student.find({school})
         return students
     }
 }

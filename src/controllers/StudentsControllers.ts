@@ -117,9 +117,18 @@ class StudentsControllers{
         }
     }
 
-    async getAll(req: Request, res: Response){
+    async getAll(req: any, res: Response){
         try{
-            let result = await this.studentsServices.getAllStudents()
+            let school;
+            let user = req?.user;
+            if(user?.school){
+                school = user?.school
+            }
+            else{
+                school = user?._id;
+            }
+
+            let result = await this.studentsServices.getAllStudents(school)
             resolve("Successful", result, 200, res)
         }
         catch(err: any){
