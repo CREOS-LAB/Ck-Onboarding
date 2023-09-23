@@ -77,7 +77,7 @@ export class VideosServices{
        
 
         let totalQuery = Object.fromEntries(
-            Object.entries(data).filter(([key, value]) => value !== undefined || null)
+            Object.entries(data).filter(([key, value]) => value != null)
           );
 
           console.log(totalQuery)
