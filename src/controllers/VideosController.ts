@@ -16,6 +16,7 @@ export class VideosController{
         try{
             let data = req.body;
             let {teacher, school} = req.query
+
             if(teacher){
                 data.createdByTeacher = req.user
             }
@@ -221,6 +222,18 @@ export class VideosController{
 
             const response = await this.videosServices.update(id, video);
             resolve("Successful", response, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+
+    async searchVideos(req: any, res: Response, next: NextFunction){
+        try{
+            const {name} = req.query;
+            let result = await this.videosServices.searchVideos(name);
+            resolve("Successful", result, 200, res)
         }
         catch(err: any){
             reject(err.message, 400, res)

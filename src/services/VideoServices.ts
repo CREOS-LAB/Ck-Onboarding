@@ -85,4 +85,12 @@ export class VideosServices{
         let result = await this.videos.find(totalQuery).exec()
         return result
     }
+
+    async searchVideos(name: string){
+        const substring = name; // Replace with the substring you're searching for
+        const searchPattern = new RegExp('^' + substring, 'i');
+
+        const result = await this.videos.find({ name: { $regex: searchPattern}})
+        return result
+    }
 }
