@@ -150,7 +150,7 @@ app.post("/class/:schoolId",verifySchoolAuth, (req: Request, res: Response, next
 //Videos route
 const videosController = Container.get(VideosController)
 
-// app.get("/videos", (req: Request, res: Response, next: NextFunction)=>videosController.getAll(req, res, next));
+app.get("/videos", (req: Request, res: Response, next: NextFunction)=>videosController.getAll(req, res, next));
 app.get("/video/:id", (req: Request, res: Response, next: NextFunction)=>videosController.getVideoById(req, res, next))
 app.delete("/video/delete/:id", (req: Request, res: Response, next: NextFunction)=>videosController.deleteVideo(req, res, next))
 app.patch("/video/update/:id", (req: Request, res: Response, next: NextFunction)=>videosController.updateVideo(req, res, next))
@@ -162,7 +162,7 @@ app.post("/videos/bulk-upload", verifyTeacherOrSchoolAuth ,(req: Request, res: R
 app.post("/videos/bulk-upload-2", verifyTeacherOrSchoolAuth,upload.single("file"), (req: Request, res: Response, next: NextFunction)=>videosController.bulkUpload2(req, res, next))
 app.patch("/video/watch/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.watchVideo(req, res, next))
 app.patch("/video/view/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.viewVideo(req, res, next))
-app.get("/videos", (req: Request, res: Response, next: NextFunction)=>videosController.searchVideos(req, res, next))
+app.get("/videos/search", (req: Request, res: Response, next: NextFunction)=>videosController.searchVideos(req, res, next))
 
 //Comments route
 const commentsController = Container.get(CommentsController);
