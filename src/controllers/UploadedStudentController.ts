@@ -36,7 +36,6 @@ class UploadedStudentControllers{
 
             data.forEach((student: any)=>{
                 student.productKey = school.productKey
-                console.log(school.productKey);
                 this.uploadedStudentServices.uploadStudent(student)
                 this.emailService.sendInviteToStudent(student.email, String(school.productKey))
             })

@@ -16,8 +16,8 @@ export class UploadedStudentServices{
 
     async uploadStudent(data: any){
 
-        let dateParts = data.dob.split("/");
-        data.dob = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]);
+        // let dateParts = data.dob.split("/");
+        // data.dob = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]);
 
         const uploadedStudent = await new this.uploadedStudent(data).save()
         return {

@@ -53,6 +53,7 @@ export class StudentServices{
         }
 
         data.dob = uploadedData.dob
+        data.age = uploadedData.age
         const student = await new this.student(data).save()
         return {
             payload: student,

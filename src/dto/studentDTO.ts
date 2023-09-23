@@ -7,7 +7,8 @@ export interface StudentDto{
     productKey: string,
     dob: Date,
     password: string
-    school: any
+    school: any,
+    age: number
 }
 
 export interface LoginDto{
