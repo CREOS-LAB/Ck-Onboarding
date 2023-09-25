@@ -6,6 +6,7 @@ import "reflect-metadata"
 import EmailService from "./EmailService";
 import generateToken from "../utils/generateToken";
 import { Response } from "express";
+import { upload } from "../utils/cloudinary";
 
 @Service()
 export class SchoolsServices{
@@ -72,6 +73,10 @@ export class SchoolsServices{
     }
 
     async update(id: string, data: any){
+        if(data.profilePicture){
+            data.profilePicture = await upload(data.profilePicture.base64)
+        }
+
         let school = await this.model.findByIdAndUpdate(id, data, {new: true});
         return school
     }

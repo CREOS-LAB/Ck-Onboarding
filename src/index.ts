@@ -98,7 +98,7 @@ app.post("/student/sign-in", (req: Request, res: Response)=>studentsController.s
 app.get("/student/:id", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentById(req, res,next))
 app.get("/student/email/:email", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentByEmail(req, res,next))
 app.post("/logout", (req: Request, res: Response, next: NextFunction)=>studentsController.logout(req, res,next))
-app.patch("/student/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res,next))
+app.patch("/student/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res))
 app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
 app.get("/students/leadership?limit=10", (req: Request, res: Response, next: NextFunction)=>studentsController.leaderBoard(req, res))
 app.get("/students/all", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=> studentsController.getAll(req, res))

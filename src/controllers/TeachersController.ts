@@ -87,7 +87,12 @@ class teacherControllers{
     async updateTeacher(req: any, res: Response, next: NextFunction){
         try{
             const {_id} = req.user;
-            const {password, ...data} = req.body;
+            const {firstName, lastName, profilePicture} = req.body;
+            let data: any = {firstName, lastName, profilePicture}
+            data = Object.fromEntries(
+                Object.entries(data).filter(([key, value]) => value != null)
+            );
+
             let result = await this.teacherServices.update(_id, data);
             resolve("Update Successful", result, 200, res)
         }

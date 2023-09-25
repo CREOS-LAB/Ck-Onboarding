@@ -91,7 +91,11 @@ export class SchoolsController{
     async updateSchool(req: any, res: Response, next: NextFunction){
         try{
             const {_id} = req.user;
-            const {password, ...data} = req.body;
+            const {schoolName, profilePicture} = req.body;
+            let data: any = {schoolName, profilePicture}
+            data = Object.fromEntries(
+                Object.entries(data).filter(([key, value]) => value != null)
+            );
             let result = await this.schoolServices.update(_id, data);
             resolve("Update Successful", result, 200, res)
         }

@@ -8,6 +8,7 @@ import Teacher from "../models/teachers.model";
 import { LoginDto } from "../dto/studentDTO";
 import EmailService from "./EmailService";
 import { generatePassword } from "../utils/generatePassword";
+import { upload } from "../utils/cloudinary";
 
 @Service()
 export class TeacherServices{
@@ -70,6 +71,10 @@ export class TeacherServices{
     }
 
     async update(id: string, data: any){
+        if(data.profilePicture){
+            data.profilePicture = await upload(data.profilePicture.base64)
+        }
+
         let teacher = await this.teacher.findByIdAndUpdate(id, data, {new: true});
         return teacher
     }

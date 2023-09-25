@@ -140,6 +140,9 @@ class StudentsControllers{
             reject(err.message, 400, res)
         }
     }
+
+    
+
 }
 
 export interface ResponseInterface{
