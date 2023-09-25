@@ -7,6 +7,7 @@ import { Response } from "express";
 import { ProductKeyService } from "./ProductKeyServices";
 import { SchoolsServices } from "./SchoolsServices";
 import { UploadedStudentServices } from "./UploadedStudentServices";
+import { upload } from "../utils/cloudinary";
 
 @Service()
 export class StudentServices{
@@ -100,6 +101,9 @@ export class StudentServices{
     }
 
     async update(id: string, data: any){
+        if(data.profilePicture){
+            data.profilePicture = await upload(data.profilePicture.base64)
+        }
         let student = await this.student.findByIdAndUpdate(id, data, {new: true});
         return student
     }

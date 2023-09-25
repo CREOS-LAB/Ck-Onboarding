@@ -83,18 +83,6 @@ class StudentsControllers{
         }
     }
 
-    async updateStudent(req: any, res: Response, next: NextFunction){
-        try{
-            const {_id} = req.user;
-            const {password, ...data} = req.body;
-            let result = await this.studentsServices.update(_id, data);
-            resolve("Update Successful", result, 200, res)
-        }
-        catch(err: any){
-            reject(err.message, 400, res)
-        }
-    }
-
     async deleteStudent(req: any, res: Response, next: NextFunction){
         try{
             const {_id} = req.user;
@@ -130,6 +118,23 @@ class StudentsControllers{
 
             let result = await this.studentsServices.getAllStudents(school)
             resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async updateStudent(req: any, res:Response){
+        try{
+            let student = req.user;
+            let {firstName, lastName, profilePicture} = req.body;
+            let studentData: any =  {firstName, lastName, profilePicture};
+            studentData = Object.fromEntries(
+                Object.entries(studentData).filter(([key, value]) => value != null)
+              );
+
+            let result = await this.studentsServices.update(student._id, studentData)
+            resolve("Updated Successful", result, 200, res)
         }
         catch(err: any){
             reject(err.message, 400, res)
