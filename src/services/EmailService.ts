@@ -83,6 +83,20 @@ class EmailService{
         html = html()
         this.mail(email, "Emmy", "Welcome to Curious Kids", html)
     }
+
+    sendMessageFromWebsiteToAdminMail(details: any){
+        let html: any = ()=>{
+            return `
+                <div>
+                    <h3> ${details.firstName} Just sent a message to you </h3>
+                    <p> user's email: ${details.email} </p>
+                    <p> Message: <b>${details.message}</b> </p>
+                </div>
+            `
+        }
+        html = html()
+        this.mail("eolaosebikan60@gmail.com", details.firstName, "You got a message.", html)
+    }
 }
 
 export default EmailService

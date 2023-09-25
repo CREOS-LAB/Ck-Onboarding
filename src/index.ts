@@ -21,6 +21,7 @@ const swaggerDocument = require('../swagger.json');
 import multer from "multer"
 import * as path from "path"
 import verifyTeacherOrSchoolAuth from './middlewares/verfyTeacherOrSchool';
+import { ContactController } from './controllers/ContactController';
 
 // Configure Multer to store files with their original names and extensions
 const storage = multer.diskStorage({
@@ -163,6 +164,10 @@ app.post("/videos/bulk-upload-2", verifyTeacherOrSchoolAuth,upload.single("file"
 app.patch("/video/watch/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.watchVideo(req, res, next))
 app.patch("/video/view/:id", verifyAuth,  (req: Request, res: Response, next: NextFunction)=>videosController.viewVideo(req, res, next))
 app.get("/videos/search", (req: Request, res: Response, next: NextFunction)=>videosController.searchVideos(req, res, next))
+
+const contactController = Container.get(ContactController);
+app.get("/contact/get-all", (req: Request, res: Response, next: NextFunction)=> contactController.getAllMessages(req, res))
+app.post("/contact/send-message", (req: Request, res: Response, next: NextFunction)=> contactController.sendMessage(req, res))
 
 //Comments route
 const commentsController = Container.get(CommentsController);
