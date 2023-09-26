@@ -10,6 +10,9 @@ const schema = new Schema({
     profilePicture: {type: String, required: false, default: "https://static.vecteezy.com/system/resources/previews/013/042/571/original/default-avatar-profile-icon-social-media-user-photo-in-flat-style-vector.jpg"},
     school: {type: Schema.Types.ObjectId, ref:"School"},
     ageRange: {type: String}
+},
+{
+    timestamps: true
 })
 
 const Teacher = mongoose.model("Teacher", schema)
