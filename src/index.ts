@@ -110,7 +110,9 @@ const teachersController = Container.get(teacherControllers);
 app.get("/teacher/", verifyAuth, (req: Request, res: Response, next: NextFunction)=>teachersController.getLoggedInTeacher(req, res,next))
 app.post("/teacher/sign-up", (req: Request, res: Response)=>teachersController.signUp(req, res))
 app.post("/teacher/sign-in", (req: Request, res: Response)=>teachersController.signIn(req, res))
-app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teachersController.getTeacherById(req, res,next))
+app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teachersController.getTeacherById(req, res,next));
+app.get("/teachers/all-by-school", verifySchoolAuth ,(req: Request, res: Response, next: NextFunction)=>teachersController.getAllBySchool(req, res,next))
+app.get("/teachers/all-by-admin", (req: Request, res: Response, next: NextFunction)=>teachersController.getAll(req, res,next))
 
 //Upload data;
 const uploadData = Container.get(UploadedStudentControllers)

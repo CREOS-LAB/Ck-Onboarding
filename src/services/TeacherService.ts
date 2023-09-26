@@ -21,6 +21,16 @@ export class TeacherServices{
 
     }
 
+    async getAll(){
+        let result = await this.teacher.find()
+        return result;
+    }
+
+    async getAllBySchool(school: any){
+        let result = await this.teacher.find({school: school._id})
+        return result;
+    }
+
     async signUp(data: any){
         data.password = generatePassword()
         this.emailService.sendTeacherSignUpDetails(data.email, data.password)
@@ -87,5 +97,13 @@ export class TeacherServices{
     async getLeaderBoard(limit: number = 10){
         let teachers = await this.teacher.find().limit(limit).sort({gem: 1});
         return teachers;
+    }
+
+    async search(name: string){
+        const substring = name; // Replace with the substring you're searching for
+        const searchPattern = new RegExp('^' + substring, 'i');
+
+        const result = await this.teacher.find({ firstName: { $regex: searchPattern}})
+        return result
     }
 }

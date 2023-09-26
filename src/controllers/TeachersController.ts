@@ -111,6 +111,38 @@ class teacherControllers{
             reject(err.message, 400, res)
         }
     }
+
+    async search(req: any, res: Response, next: NextFunction){
+        try{
+            const {name} = req.query;
+            let result = await this.teacherServices.search(name);
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async getAll(req: any, res: Response, next: NextFunction){
+        try{
+            let result = await this.teacherServices.getAll();
+            resolve("Successful", result, 200, res)   
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async getAllBySchool(req: any, res: Response, next: NextFunction){
+        try{
+            let school = req.user;
+            let result = await this.teacherServices.getAllBySchool(school);
+            resolve("Successful", result, 200, res) 
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
 }
 
 export interface ResponseInterface{
