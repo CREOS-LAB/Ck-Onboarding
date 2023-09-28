@@ -6,10 +6,13 @@ import { VideosServices } from "../services/VideoServices";
 import { uploader } from "../utils/uploader";
 import { upload } from "../utils/cloudinary";
 import * as xlsx from "xlsx"
+import { StudentServices } from "../services/StudentsServices";
 
 @Service()
 export class VideosController{
-    constructor(private readonly videosServices : VideosServices)
+    constructor(private readonly videosServices : VideosServices,
+            private readonly studentServices: StudentServices
+        )
     {}
 
     async create(req: any, res: Response, next: NextFunction){
@@ -221,6 +224,26 @@ export class VideosController{
             console.log(video?.views)
 
             const response = await this.videosServices.update(id, video);
+            resolve("Successful", response, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async completeVideo(req: any, res: Response, next: NextFunction){
+        try{
+            const {id} = req.params;
+            const student = req.user;
+            let video = await this.videosServices.getById(id)
+            let index = video?.watched.indexOf(student._id)
+            let response = null
+            if(index === -1){
+                video?.completed.push(student._id)
+                student.gem += 2;
+                this.videosServices.update(id, video);
+                response = await this.studentServices.update(student._id, student)
+            }
             resolve("Successful", response, 200, res)
         }
         catch(err: any){

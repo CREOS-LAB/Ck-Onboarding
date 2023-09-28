@@ -113,8 +113,8 @@ export class StudentServices{
         return student
     }
 
-    async getLeaderBoard(limit: number = 10){
-        let students = await this.student.find().limit(limit).sort({gem: 1});
+    async getLeaderBoard(limit: number = 10, id: any){
+        let students = await this.student.find({school: id }).limit(limit).sort({gem: 1});
         return students;
     }
 

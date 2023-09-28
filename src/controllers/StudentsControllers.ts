@@ -94,10 +94,20 @@ class StudentsControllers{
         }
     }
 
-    async leaderBoard(req: Request, res: Response){
+    async leaderBoard(req: any, res: Response){
         try{
             const {limit} = req.query;
-            let result = await this.studentsServices.getLeaderBoard(Number(limit));
+            let user = req.user;
+            let id;
+
+            if(user?.school){
+                id = user.school
+            }
+            else{
+                id = user;
+            }
+
+            let result = await this.studentsServices.getLeaderBoard(Number(limit), id);
             resolve("Successful", result, 200, res)
         }
         catch(err: any){
