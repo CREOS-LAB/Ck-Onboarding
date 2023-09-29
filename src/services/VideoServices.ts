@@ -1,6 +1,7 @@
 import { Service } from "typedi";
 import "reflect-metadata"
 import Videos from "../models/videos.model";
+import { returnDescription } from "../utils/description-generator";
 
 @Service()
 export class VideosServices{
@@ -24,7 +25,8 @@ export class VideosServices{
            console.log("No valid range found in the input string.");
        }
        }
-
+       
+        data.description = await returnDescription(data.link)
         let result = await new this.videos(data).save()
         return result
     }

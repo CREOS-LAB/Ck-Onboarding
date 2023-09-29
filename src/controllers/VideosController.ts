@@ -27,7 +27,10 @@ export class VideosController{
                 data.createdBySchool = req.user
             }
 
-            data.cover = await upload(data.cover.base64)
+            if(data.cover){
+                data.cover = await upload(data.cover?.base64)
+            }
+            
             let result = await this.videosServices.save(data);
             resolve("Successful", result, 200, res)
         }
