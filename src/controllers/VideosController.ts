@@ -241,6 +241,7 @@ export class VideosController{
             if(index === -1){
                 video?.completed.push(student._id)
                 student.gem += 2;
+                student.completedCourses += 1
                 this.videosServices.update(id, video);
                 response = await this.studentServices.update(student._id, student)
             }

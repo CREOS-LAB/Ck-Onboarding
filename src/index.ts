@@ -22,6 +22,7 @@ import multer from "multer"
 import * as path from "path"
 import verifyTeacherOrSchoolAuth from './middlewares/verfyTeacherOrSchool';
 import { ContactController } from './controllers/ContactController';
+import { AdminController } from './controllers/AdminController';
 
 // Configure Multer to store files with their original names and extensions
 const storage = multer.diskStorage({
@@ -174,13 +175,19 @@ app.post("/contact/send-message", (req: Request, res: Response, next: NextFuncti
 
 //Comments route
 const commentsController = Container.get(CommentsController);
-
 app.get("/comment", (req: Request, res: Response, next: NextFunction)=>commentsController.getAll(req, res, next));
 app.get("/comment/:id", (req: Request, res: Response, next: NextFunction)=>commentsController.getCommentById(req, res, next))
 app.delete("/comment/delete/:id", (req: Request, res: Response, next: NextFunction)=>commentsController.deleteComment(req, res, next))
 app.patch("/comment/:id", (req: Request, res: Response, next: NextFunction)=>commentsController.updateComment(req, res, next))
 app.get("/comment/:videoId", (req: Request, res: Response, next: NextFunction)=>commentsController.getCommentsByVideo(req, res, next))
 app.post("/comment", (req: Request, res: Response, next: NextFunction)=>commentsController.create(req, res, next))
+
+//admin routes
+const adminController = Container.get(AdminController);
+// app.get("/admin/", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=> schoolController.(req, res,next))
+app.post("/admin/sign-up", (req: Request, res: Response)=>adminController.signUp(req, res))
+app.post("/admin/sign-in", (req: Request, res: Response)=>adminController.signIn(req, res))
+
 
 //6501938f9df5e3c94892ace2
 

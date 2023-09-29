@@ -20,6 +20,23 @@ export class StudentServices{
 
     }
 
+    async setStreak(studentId: string){
+        let newDate = new Date();
+        let student: any = await this.student.findById(studentId);
+        
+        let diff = student?.last_logged_in?.getTime() - newDate.getTime();
+        diff = Math.floor(diff / (1000 * 3600 * 24));
+        if(diff != 1){
+            student.streak += 1;
+        }
+        else{
+            student.streak = 0
+        }
+        student.last_logged_in = newDate;
+        let result = await this.update(studentId, student)
+        return result
+    }
+
     async signUp(data: StudentDto){
         //validate data
         data.password = await encodePassword(data.password);
@@ -81,7 +98,7 @@ export class StudentServices{
                 message: "Incorrect Password"
             }
         }
-
+        student = await this.setStreak(student._id)
         let token = generateToken(student._id, student.email, res)
         return {
             payload: {student, token},

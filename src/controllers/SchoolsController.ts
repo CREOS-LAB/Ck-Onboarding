@@ -31,9 +31,7 @@ export class SchoolsController{
         try{
             const data: LoginDto = req.body;
             let result: ResponseInterface = await this.schoolServices.signIn(data, res);
-            if(result.payload){
-                generateToken(result.payload._id, result.payload.email, res)
-            }
+            
             resolve(result.message, result.payload, result.status, res)
         }
         catch(err: any){

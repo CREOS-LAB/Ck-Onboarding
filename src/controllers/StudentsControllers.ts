@@ -27,7 +27,6 @@ class StudentsControllers{
         try{
             const data: LoginDto = req.body;
             let result: ResponseInterface = await this.studentsServices.signIn(data, res);
-            
             resolve(result.message, result.payload, result.status, res)
         }
         catch(err: any){
@@ -61,7 +60,8 @@ class StudentsControllers{
     async getLoggedInStudent(req: any, res: Response, next: NextFunction){
         try{
             const {_id} = req.user;
-            const user = await this.studentsServices.getStudentById(_id)
+            let user = await this.studentsServices.setStreak(_id)
+            // const user = await this.studentsServices.getStudentById(_id)
             resolve("Successful", user, 200, res)
             
         }

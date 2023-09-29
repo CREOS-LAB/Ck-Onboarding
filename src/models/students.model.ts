@@ -17,7 +17,9 @@ const schema = new Schema({
     badges: {type: String},
     achievement: {type: String},
     streak: {type: Number, default: 0},
-    age: {type: Number}
+    age: {type: Number},
+    last_logged_in: {type: Date},
+    completedCourses: {type: Number, default: 0}
     },
     {
         timestamps: true
