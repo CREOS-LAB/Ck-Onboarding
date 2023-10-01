@@ -26,10 +26,10 @@ export class StudentServices{
         
         let diff = student?.last_logged_in?.getTime() - newDate.getTime();
         diff = Math.floor(diff / (1000 * 3600 * 24));
-        if(diff != 1){
+        if(diff === 1){
             student.streak += 1;
         }
-        else{
+        else if(diff > 1){
             student.streak = 0
         }
         student.last_logged_in = newDate;
