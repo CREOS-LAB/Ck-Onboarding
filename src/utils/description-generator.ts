@@ -24,7 +24,7 @@ export const returnDescription = async (link: string)=>{
     await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`)
     .then((response) => {
     description = response.data.items[0].snippet.description;
-    thumbnail = response.data.items[0].snippet.thumbnails.default.url;
+    thumbnail = response.data.items[0].snippet.thumbnails.standard.url;
   })
   .catch((error) => {
     console.error('Error fetching video description:', error);
