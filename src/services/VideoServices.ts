@@ -25,8 +25,9 @@ export class VideosServices{
            console.log("No valid range found in the input string.");
        }
        }
-       
-        data.description = await returnDescription(data.link)
+       let {description, thumbnail} = await returnDescription(data.link)
+        data.description = description;
+        data.cover = thumbnail
         let result = await new this.videos(data).save()
         return result
     }
