@@ -239,7 +239,7 @@ export class VideosController{
             const {id} = req.params;
             const student = req.user;
             let video = await this.videosServices.getById(id)
-            let index = video?.watched.indexOf(student._id)
+            let index = video?.completed.indexOf(student._id)
             let response = null
             if(index === -1){
                 video?.completed.push(student._id)
