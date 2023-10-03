@@ -82,7 +82,7 @@ app.get('/cookie', (req:Request, res: Response)=>{
 })
      
 // Run MongoDB
-mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`)
+mongoose.connect(process.env.ATLAS_URI || `mongodb+srv://eolaosebikan60:s6K9Sw4ZORbClyWp@cluster0.apx25yv.mongodb.net/`)
 const connection = mongoose.connection
 connection.once('open', ()=>{console.log('Database running Successfully')});
       
@@ -109,7 +109,7 @@ app.get("/students/all", verifyTeacherOrSchoolAuth, (req: Request, res: Response
 const teachersController = Container.get(teacherControllers);
 
 app.get("/teacher/", verifyAuth, (req: Request, res: Response, next: NextFunction)=>teachersController.getLoggedInTeacher(req, res,next))
-app.post("/teacher/sign-up", (req: Request, res: Response)=>teachersController.signUp(req, res))
+app.post("/teacher/sign-up", verifySchoolAuth ,(req: Request, res: Response)=>teachersController.signUp(req, res))
 app.post("/teacher/sign-in", (req: Request, res: Response)=>teachersController.signIn(req, res))
 app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teachersController.getTeacherById(req, res,next));
 app.get("/teachers/all-by-school", verifySchoolAuth ,(req: Request, res: Response, next: NextFunction)=>teachersController.getAllBySchool(req, res,next))
@@ -129,6 +129,7 @@ app.get("/school/email/:email", (req: Request, res: Response, next: NextFunction
 app.post("/logout", (req: Request, res: Response, next: NextFunction)=>schoolController.logout(req, res,next))
 app.patch("/school/update", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.updateSchool(req, res,next))
 app.delete("/school/delete", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.deleteSchool(req, res,next))
+app.get("/schools/details", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.getSchoolDetails(req, res,next))
       
 
 // Collections route

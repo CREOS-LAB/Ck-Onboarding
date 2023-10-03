@@ -7,12 +7,18 @@ import { NextFunction, Request, Response } from "express";
 import { LoginDto } from "../dto/studentDTO";
 import generateToken from "../utils/generateToken";
 import { ProductKeyService } from "../services/ProductKeyServices";
+import { UploadedStudentServices } from "../services/UploadedStudentServices";
+import { StudentServices } from "../services/StudentsServices";
+import { TeacherServices } from "../services/TeacherService";
 
 @Service()
 export class SchoolsController{
     constructor(
         private readonly schoolServices : SchoolsServices,
-        private readonly productKey: ProductKeyService
+        private readonly productKey: ProductKeyService,
+        private readonly uploadedStudents: UploadedStudentServices,
+        private readonly studentServices: StudentServices,
+        private readonly teacherServices: TeacherServices
         ){}
 
     async signUp(req: Request, res: Response){
@@ -43,6 +49,32 @@ export class SchoolsController{
         try{
             let {id} = req.params;
             let result = await this.schoolServices.getSchoolById(id)
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async getSchoolDetails(req: any, res: Response, next: NextFunction){
+        try{
+            let user = req.user;
+            let school;
+
+            if(user?.school){
+                school = user.school
+            }
+            else{
+                school = user;
+            }
+            
+            let allUploadedStudents = await this.uploadedStudents.getAllBySchool(school);
+            let totalStudents: any = await this.studentServices.getStudentsBySchool(school);
+            totalStudents = totalStudents.length;
+            let totalTeachers: any = await this.teacherServices.getAllBySchool(school);
+            totalTeachers = totalTeachers.length;
+
+            let result = {allUploadedStudents, totalStudents, totalTeachers}
             resolve("Successful", result, 200, res)
         }
         catch(err: any){

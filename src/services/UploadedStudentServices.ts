@@ -31,4 +31,9 @@ export class UploadedStudentServices{
         let uploadedStudent = await this.uploadedStudent.findOne({email}).populate("productKey")
         return uploadedStudent
     }
+
+    async getAllBySchool(school: any){
+        let result = await this.uploadedStudent.find({productKey: String(school.productKey)});
+        return result.length;
+    }
 }
