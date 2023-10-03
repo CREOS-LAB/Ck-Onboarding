@@ -82,7 +82,7 @@ app.get('/cookie', (req:Request, res: Response)=>{
 })
      
 // Run MongoDB
-mongoose.connect(process.env.ATLAS_URI || `mongodb+srv://eolaosebikan60:s6K9Sw4ZORbClyWp@cluster0.apx25yv.mongodb.net/`)
+mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`)
 const connection = mongoose.connection
 connection.once('open', ()=>{console.log('Database running Successfully')});
       
@@ -102,7 +102,7 @@ app.get("/student/email/:email", (req: Request, res: Response, next: NextFunctio
 app.post("/logout", (req: Request, res: Response, next: NextFunction)=>studentsController.logout(req, res,next))
 app.patch("/student/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res))
 app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
-app.get("/students/leadership",verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.leaderBoard(req, res))
+app.get("/students/leadership", (req: Request, res: Response, next: NextFunction)=>studentsController.leaderBoard(req, res))
 app.get("/students/all", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=> studentsController.getAll(req, res))
 
 //teachers route;
