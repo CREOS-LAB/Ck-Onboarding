@@ -23,6 +23,7 @@ import * as path from "path"
 import verifyTeacherOrSchoolAuth from './middlewares/verfyTeacherOrSchool';
 import { ContactController } from './controllers/ContactController';
 import { AdminController } from './controllers/AdminController';
+import { MyVideoController } from './controllers/MyVideoController';
 
 // Configure Multer to store files with their original names and extensions
 const storage = multer.diskStorage({
@@ -82,7 +83,7 @@ app.get('/cookie', (req:Request, res: Response)=>{
 })
      
 // Run MongoDB
-mongoose.connect(process.env.ATLAS_URI || `mongodb+srv://eolaosebikan60:s6K9Sw4ZORbClyWp@cluster0.apx25yv.mongodb.net/`)
+mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`)
 const connection = mongoose.connection
 connection.once('open', ()=>{console.log('Database running Successfully')});
       
@@ -182,6 +183,12 @@ app.delete("/comment/delete/:id", (req: Request, res: Response, next: NextFuncti
 app.patch("/comment/:id", (req: Request, res: Response, next: NextFunction)=>commentsController.updateComment(req, res, next))
 app.get("/comment/:videoId", (req: Request, res: Response, next: NextFunction)=>commentsController.getCommentsByVideo(req, res, next))
 app.post("/comment", (req: Request, res: Response, next: NextFunction)=>commentsController.create(req, res, next))
+
+//MyVideos
+const myVideosController = Container.get(MyVideoController);
+app.get("/my-videos", verifyAuth, (req: Request, res: Response, next: NextFunction)=> myVideosController.getAll(req, res))
+app.post("/my-videos", verifyAuth, (req: Request, res: Response, next: NextFunction)=> myVideosController.save(req, res))
+app.patch("/my-videos/videoId", verifyAuth, (req: Request, res: Response, next: NextFunction)=> myVideosController.update(req, res))
 
 //admin routes
 const adminController = Container.get(AdminController);

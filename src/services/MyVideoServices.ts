@@ -16,8 +16,20 @@ export class MyVideoService{
         return result
     }
 
-    async update(id: string, data: any){
-        let result = await this.model.findByIdAndUpdate(id, data, {new: true});
+    async getByStudent(student: any, video: any | null){
+        let result: any;
+        if(video){
+            result = await this.model.find({student, video})
+        }
+        else{
+            result = await this.model.find({student})
+        }
+
+        return result;
+    }
+
+    async update(student: any, video: any, data: any){
+        let result = await this.model.findOneAndUpdate({student, video}, data, {new: true});
         return result
     }
 
