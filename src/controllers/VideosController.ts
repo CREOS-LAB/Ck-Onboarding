@@ -179,7 +179,7 @@ export class VideosController{
                 else{
                     video.createdBySchool = req.user
                 }
-                
+                console.log(video)
                this.videosServices.save(video) 
             })
             let result = {
