@@ -85,4 +85,9 @@ export class SchoolsServices{
         let school = await this.model.findByIdAndDelete(id)
         return school
     }
+
+    async getAll(){
+        let school = await this.model.find();
+        return school;
+    }
 }

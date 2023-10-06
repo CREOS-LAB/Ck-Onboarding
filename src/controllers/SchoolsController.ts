@@ -144,4 +144,15 @@ export class SchoolsController{
             reject(err.message, 400, res)
         }
     }
+
+    async getAll(req: any, res: Response, next: NextFunction){
+        try{
+            let result = await this.schoolServices.getAll();
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
 }
