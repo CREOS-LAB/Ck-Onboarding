@@ -19,7 +19,7 @@ const verifyAdmin = async (req: any, res: Response, next: NextFunction)=>{
         let {_id} = req.user;
         let user = await Admin.findById(_id);
         if(!user){
-            return res.status(404).json({message: 'Amount Not Found'})
+            return res.status(404).json({message: 'Admin Not Found'})
         }
         req.user = user
         next()
