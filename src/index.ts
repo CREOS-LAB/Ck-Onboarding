@@ -198,6 +198,8 @@ app.post("/admin/sign-in", (req: Request, res: Response)=>adminController.signIn
 app.get("/schools/all", (req: Request, res: Response, next: NextFunction)=>schoolController.getAll(req, res, next))
 app.get("/teachers/all-by-admin", (req: Request, res: Response, next: NextFunction)=>teachersController.getAll(req, res,next))
 app.get("/admin/details", (req: Request, res: Response, next: NextFunction)=>adminController.getDetails(req, res, next))
+app.get("/admin/students/:schoolId", (req: Request, res: Response, next: NextFunction)=>adminController.getStudentsBySchool(req, res))
+app.get("/admin/teachers/:schoolId", (req: Request, res: Response, next: NextFunction)=>adminController.getTeachersBySchool(req, res))
 
 
 //6501938f9df5e3c94892ace2

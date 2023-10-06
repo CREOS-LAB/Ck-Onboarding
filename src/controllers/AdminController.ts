@@ -75,4 +75,26 @@ export class AdminController{
             reject(err.message, 400, res)
         }
     }
+
+    async getStudentsBySchool(req: Request, res: Response){
+        try{
+            const {schoolId} = req.params;
+            let result = await this.studentServices.getAllStudents(schoolId)
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async getTeachersBySchool(req: Request, res: Response){
+        try{
+            const {schoolId} = req.params;
+            let result = await this.teachersServices.getAllBySchool(schoolId)
+            resolve("Successful", result, 200, res)
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
 }
