@@ -196,6 +196,9 @@ const adminController = Container.get(AdminController);
 app.post("/admin/sign-up", (req: Request, res: Response)=>adminController.signUp(req, res))
 app.post("/admin/sign-in", (req: Request, res: Response)=>adminController.signIn(req, res))
 app.get("/schools/all", (req: Request, res: Response, next: NextFunction)=>schoolController.getAll(req, res, next))
+app.get("/teachers/all-by-admin", (req: Request, res: Response, next: NextFunction)=>teachersController.getAll(req, res,next))
+app.get("/admin/details", (req: Request, res: Response, next: NextFunction)=>adminController.getDetails(req, res, next))
+
 
 //6501938f9df5e3c94892ace2
 
