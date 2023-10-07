@@ -24,6 +24,7 @@ import verifyTeacherOrSchoolAuth from './middlewares/verfyTeacherOrSchool';
 import { ContactController } from './controllers/ContactController';
 import { AdminController } from './controllers/AdminController';
 import { MyVideoController } from './controllers/MyVideoController';
+import { BadgeController } from './controllers/BadgeController';
 
 // Configure Multer to store files with their original names and extensions
 const storage = multer.diskStorage({
@@ -196,14 +197,21 @@ const adminController = Container.get(AdminController);
 app.post("/admin/sign-up", (req: Request, res: Response)=>adminController.signUp(req, res))
 app.post("/admin/sign-in", (req: Request, res: Response)=>adminController.signIn(req, res))
 app.get("/schools/all", (req: Request, res: Response, next: NextFunction)=>schoolController.getAll(req, res, next))
-app.get("/teachers/all-by-admin", (req: Request, res: Response, next: NextFunction)=>teachersController.getAll(req, res,next))
+app.get("/admin/get-teachers", (req: Request, res: Response, next: NextFunction)=>teachersController.getAll(req, res,next))
 app.get("/admin/details", (req: Request, res: Response, next: NextFunction)=>adminController.getDetails(req, res, next))
 app.get("/admin/students/:schoolId", (req: Request, res: Response, next: NextFunction)=>adminController.getStudentsBySchool(req, res))
 app.get("/admin/teachers/:schoolId", (req: Request, res: Response, next: NextFunction)=>adminController.getTeachersBySchool(req, res))
 
-
 //6501938f9df5e3c94892ace2
 
+// badges
+const badgeController = Container.get(BadgeController);
+app.post("/badge", (req: Request, res: Response, next: NextFunction)=> badgeController.save(req, res,next))
+app.get("/badges/all", (req: Request, res: Response, next: NextFunction)=> badgeController.getAll(req, res,next))
+app.patch("/badge/:id",  (req: Request, res: Response, next: NextFunction)=> badgeController.edit(req, res,next))
+app.delete("/badge/:id",  (req: Request, res: Response, next: NextFunction)=> badgeController.edit(req, res,next))
+app.post("/badges/search",  (req: Request, res: Response, next: NextFunction)=> badgeController.query(req, res,next))
+app.get("/badge/:id",  (req: Request, res: Response, next: NextFunction)=> badgeController.getById(req, res,next))
 
 // Run Server
 app.listen(port, () => {
