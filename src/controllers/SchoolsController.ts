@@ -170,7 +170,7 @@ export class SchoolsController{
             school.resetPasswordToken = token
             school.resetTokenExpires = Date.now() + 3600000; // 1 hour
             let result = this.schoolServices.update(school._id, school)
-            this.emailServices.sendResetPassword(email, token)
+            this.emailServices.sendResetPassword(email, token, 3)
             resolve("Check your Mail Inbox", null, 200, res);
         }
         catch(err: any){
