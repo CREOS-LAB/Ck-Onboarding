@@ -90,7 +90,7 @@ class StudentsControllers{
 
     async deleteStudent(req: any, res: Response, next: NextFunction){
         try{
-            const {_id} = req.user;
+            const {_id} = req.params;
             let result = await this.studentsServices.delete(_id);
             resolve("Deleted Successful", result, 200, res)
         }

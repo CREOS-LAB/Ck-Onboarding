@@ -107,7 +107,7 @@ class teacherControllers{
 
     async deleteTeacher(req: any, res: Response, next: NextFunction){
         try{
-            const {_id} = req.user;
+            const {_id} = req.params;
             let result = await this.teacherServices.delete(_id);
             resolve("Deleted Successful", result, 200, res)
         }

@@ -103,7 +103,7 @@ app.get("/student/:id", (req: Request, res: Response, next: NextFunction)=>stude
 app.get("/student/email/:email", (req: Request, res: Response, next: NextFunction)=>studentsController.getStudentByEmail(req, res,next))
 app.post("/logout", (req: Request, res: Response, next: NextFunction)=>studentsController.logout(req, res,next))
 app.patch("/student/update", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.updateStudent(req, res))
-app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
+app.delete("/student/:id", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>studentsController.deleteStudent(req, res,next))
 app.get("/students/leadership", (req: Request, res: Response, next: NextFunction)=>studentsController.leaderBoard(req, res))
 app.get("/students/all", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=> studentsController.getAll(req, res))
 
@@ -120,6 +120,7 @@ app.post("/teacher/sign-in", (req: Request, res: Response)=>teachersController.s
 app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teachersController.getTeacherById(req, res,next));
 app.get("/teachers/all-by-school", verifySchoolAuth ,(req: Request, res: Response, next: NextFunction)=>teachersController.getAllBySchool(req, res,next))
 app.get("/teachers/all-by-admin", (req: Request, res: Response, next: NextFunction)=>teachersController.getAll(req, res,next))
+app.delete("/teacher/:id", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>teachersController.deleteTeacher(req, res,next))
 //password related
 app.post("/teacher/forgot-password", (req: Request, res: Response, next: NextFunction)=>teachersController.forgotPassword(req, res))
 app.post("/teacher/reset-password", (req: Request, res: Response, next: NextFunction)=>teachersController.resetPassword(req, res))
