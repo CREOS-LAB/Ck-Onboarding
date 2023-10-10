@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const schema = new Schema({
-    cover: {type: String, required: true},
+    cover: {type: String, required: false},
     title: {type: String, required: true},
     description: {type: String, required: true},
     numberOfVideos: {type: String, required: true},

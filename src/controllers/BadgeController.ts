@@ -47,6 +47,7 @@ export class BadgeController{
         try{
             let {id} = req.params;
             let result = await this.services.delete(id);
+            
             resolve("Successful", result, 200, res);
         }
         catch(err: any){
