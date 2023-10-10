@@ -16,4 +16,9 @@ const generateToken = (_id: string, email: string, response: Response)=>{
     return token
 }
 
+export const generateTokenForForgotPassword = (_id: string)=>{
+    const token = jwt.sign({_id}, jwtSecret, {expiresIn: "1h"});
+    return token;
+}
+
 export default generateToken

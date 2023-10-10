@@ -3,12 +3,17 @@ import {StudentServices} from "../services/StudentsServices";
 import { NextFunction, Request, Response } from "express";
 import { reject, resolve } from "../utils/reponseService";
 import { LoginDto } from "../dto/studentDTO";
-import generateToken from "../utils/generateToken";
+import generateToken, { generateTokenForForgotPassword } from "../utils/generateToken";
 import "reflect-metadata"
+import EmailService from "../services/EmailService";
+import Student from "../models/students.model";
+import { encodePassword } from "../config/bcrypt";
 
 @Service()
 class StudentsControllers{
-    constructor(private readonly studentsServices = Container.get(StudentServices)){
+    constructor(private readonly studentsServices = Container.get(StudentServices),
+        private readonly emailService : EmailService
+    ){
 
     }
 
@@ -151,7 +156,47 @@ class StudentsControllers{
         }
     }
 
-    
+    async forgotPassword(req: Request, res: Response){
+        try{
+            const {email} = req.body;
+            let student: any = await this.studentsServices.getStudentByEmail(email)
+            if(!student){
+                reject("Invalid email", 400, res)
+            }
+            let token = generateTokenForForgotPassword(student._id);
+            student.resetPasswordToken = token
+            student.resetTokenExpires = Date.now() + 3600000; // 1 hour
+            this.studentsServices.update(student._id, student)
+            this.emailService.sendResetPassword(email, token)
+            resolve("Check your Mail Inbox", null, 200, res);
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
+
+    async resetPassword(req: Request, res: Response){
+        try{
+            const {token, password} = req.body;
+            let student: any = await Student.find({
+                resetPasswordToken: token,
+                resetTokenExpires: { $gt: Date.now() }
+            })
+
+            if(!student){
+                reject("Token is Expired or Invalid", 400, res)
+            }
+
+            student.password = encodePassword(password);
+            student.resetPasswordToken = null;
+            student.resetTokenExpires = null;
+            this.studentsServices.update(student._id, student)
+            resolve("Reset Succesful", null, 200, res);
+        }
+        catch(err: any){
+            reject(err.message, 400, res)
+        }
+    }
 
 }
 

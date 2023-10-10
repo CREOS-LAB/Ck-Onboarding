@@ -4,7 +4,7 @@ import Gender from "../enum/gender"
 
 const schema = new Schema({
         fullName: {type: String, required: true},
-        email: {type: String, required: true, unique: false},
+        email: {type: String, required: true, unique: true},
         productKey: {type:String, required: true},
         age: {type: String, required: false},
         dob: {type: Date}

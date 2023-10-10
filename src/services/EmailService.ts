@@ -97,6 +97,19 @@ class EmailService{
         html = html()
         this.mail("eolaosebikan60@gmail.com", details.firstName, "You got a message.", html)
     }
+
+    sendResetPassword(email: string, token: string){
+        let html : any = ()=>{
+            return `
+                <div>
+                    <h3> Reset Password </h3>
+                    <p> Click <a href="https://ck-kids-dashboard.vercel.app/set-password/${token}" target="_blank" >here</a> to reset your password </p>
+                </div>
+            `
+        }
+        html = html()
+        this.mail(email, "Emmy", "Reset Password.", html)
+    }
 }
 
 export default EmailService

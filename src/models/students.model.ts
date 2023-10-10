@@ -19,7 +19,9 @@ const schema = new Schema({
     streak: {type: Number, default: 0},
     age: {type: Number},
     last_logged_in: {type: Date},
-    completedCourses: {type: Number, default: 0}
+    completedCourses: {type: Number, default: 0},
+    resetPasswordToken: {type: String},
+    resetTokenExpires: {type: Date}
     },
     {
         timestamps: true

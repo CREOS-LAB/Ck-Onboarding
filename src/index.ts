@@ -107,6 +107,10 @@ app.delete("/students/delete", verifyAuth, (req: Request, res: Response, next: N
 app.get("/students/leadership", (req: Request, res: Response, next: NextFunction)=>studentsController.leaderBoard(req, res))
 app.get("/students/all", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=> studentsController.getAll(req, res))
 
+// password related
+app.post("/student/forgot-password", (req: Request, res: Response, next: NextFunction)=>studentsController.forgotPassword(req, res))
+app.post("/student/reset-password", (req: Request, res: Response, next: NextFunction)=>studentsController.resetPassword(req, res))
+
 //teachers route;
 const teachersController = Container.get(teacherControllers);
 
@@ -132,6 +136,7 @@ app.post("/logout", (req: Request, res: Response, next: NextFunction)=>schoolCon
 app.patch("/school/update", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.updateSchool(req, res,next))
 app.delete("/school/delete", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.deleteSchool(req, res,next))
 app.get("/schools/details", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.getSchoolDetails(req, res,next))
+
       
 
 // Collections route
