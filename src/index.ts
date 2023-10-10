@@ -84,7 +84,7 @@ app.get('/cookie', (req:Request, res: Response)=>{
 })
      
 // Run MongoDB
-mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`)
+mongoose.connect(process.env.ATLAS_URI || `mongodb+srv://eolaosebikan60:s6K9Sw4ZORbClyWp@cluster0.apx25yv.mongodb.net/`)
 const connection = mongoose.connection
 connection.once('open', ()=>{console.log('Database running Successfully')});
       
