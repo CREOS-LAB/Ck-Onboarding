@@ -103,7 +103,7 @@ class EmailService{
             return `
                 <div>
                     <h3> Reset Password </h3>
-                    <p> Click <a href="https://ck-kids-dashboard.vercel.app/set-password/${token}" target="_blank" >here</a> to reset your password </p>
+                    <p> Click <a href="https://ck-kids-dashboard.vercel.app/set-password?token=${token}" target="_blank" >here</a> to reset your password </p>
                 </div>
             `
         }

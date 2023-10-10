@@ -120,6 +120,9 @@ app.post("/teacher/sign-in", (req: Request, res: Response)=>teachersController.s
 app.get("/teacher/:id", (req: Request, res: Response, next: NextFunction)=>teachersController.getTeacherById(req, res,next));
 app.get("/teachers/all-by-school", verifySchoolAuth ,(req: Request, res: Response, next: NextFunction)=>teachersController.getAllBySchool(req, res,next))
 app.get("/teachers/all-by-admin", (req: Request, res: Response, next: NextFunction)=>teachersController.getAll(req, res,next))
+//password related
+app.post("/teacher/forgot-password", (req: Request, res: Response, next: NextFunction)=>teachersController.forgotPassword(req, res))
+app.post("/teacher/reset-password", (req: Request, res: Response, next: NextFunction)=>teachersController.resetPassword(req, res))
 
 //Upload data;
 const uploadData = Container.get(UploadedStudentControllers)
@@ -136,6 +139,9 @@ app.post("/logout", (req: Request, res: Response, next: NextFunction)=>schoolCon
 app.patch("/school/update", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.updateSchool(req, res,next))
 app.delete("/school/delete", verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.deleteSchool(req, res,next))
 app.get("/schools/details", verifyTeacherOrSchoolAuth, (req: Request, res: Response, next: NextFunction)=>schoolController.getSchoolDetails(req, res,next))
+//password related
+app.post("/school/forgot-password", (req: Request, res: Response, next: NextFunction)=>schoolController.forgotPassword(req, res))
+app.post("/school/reset-password", (req: Request, res: Response, next: NextFunction)=>schoolController.resetPassword(req, res))
 
       
 
