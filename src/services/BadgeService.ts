@@ -22,7 +22,7 @@ export class BadgesServices{
     }
 
     async delete(id: string){
-        let result = await this.model.findOneAndDelete({_id: id})
+        let result = await this.model.findByIdAndDelete(id)
         return result;
     }
 

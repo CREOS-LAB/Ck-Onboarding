@@ -84,7 +84,7 @@ app.get('/cookie', (req:Request, res: Response)=>{
 })
      
 // Run MongoDB
-mongoose.connect(process.env.ATLAS_URI || `mongodb+srv://eolaosebikan60:s6K9Sw4ZORbClyWp@cluster0.apx25yv.mongodb.net/`)
+mongoose.connect(process.env.ATLAS_URI || `mongodb://127.0.0.1:27017/ck-onboarding`)
 const connection = mongoose.connection
 connection.once('open', ()=>{console.log('Database running Successfully')});
       
@@ -220,7 +220,7 @@ const badgeController = Container.get(BadgeController);
 app.post("/badge", (req: Request, res: Response, next: NextFunction)=> badgeController.save(req, res,next))
 app.get("/badges/all", (req: Request, res: Response, next: NextFunction)=> badgeController.getAll(req, res,next))
 app.patch("/badge/:id",  (req: Request, res: Response, next: NextFunction)=> badgeController.edit(req, res,next))
-app.delete("/badge/:id",  (req: Request, res: Response, next: NextFunction)=> badgeController.edit(req, res,next))
+app.delete("/badge/:id",  (req: Request, res: Response, next: NextFunction)=> badgeController.delete(req, res,next))
 app.post("/badges/search",  (req: Request, res: Response, next: NextFunction)=> badgeController.query(req, res,next))
 app.get("/badge/:id",  (req: Request, res: Response, next: NextFunction)=> badgeController.getById(req, res,next))
 
