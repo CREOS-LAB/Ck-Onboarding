@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const schema = new Schema({
-    members: [{type: Schema.Types.ObjectId, ref: "Message"}]
+    members: [{type: Schema.Types.ObjectId, ref: "Student"}]
 },
 {
     timestamps: true
