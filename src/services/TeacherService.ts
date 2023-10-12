@@ -33,7 +33,7 @@ export class TeacherServices{
 
     async signUp(data: any){
         data.password = generatePassword()
-        this.emailService.sendTeacherSignUpDetails(data.email, data.password)
+        this.emailService.sendTeacherSignUpDetails(data.email, data.password, data.school.schoolName)
         data.password = await encodePassword(data.password);
         const teacher = await new this.teacher(data).save()
         return {

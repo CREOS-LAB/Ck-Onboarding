@@ -25,6 +25,8 @@ import { ContactController } from './controllers/ContactController';
 import { AdminController } from './controllers/AdminController';
 import { MyVideoController } from './controllers/MyVideoController';
 import { BadgeController } from './controllers/BadgeController';
+import { MessagesController } from './controllers/MessagesServices';
+import { ConversationsController } from './controllers/ConversationController';
 
 // Configure Multer to store files with their original names and extensions
 const storage = multer.diskStorage({
@@ -55,21 +57,6 @@ const port =  process.env.PORT || 3020;
     credentials: true,
   }));
 
-// const allowedOrigins = ['http://localhost:3000', "https://ck-kids-dashboard.vercel.app"];
-
-
-// // Enable CORS and allow credentials
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   const origin = req.headers.origin;
-  
-//   // Check if the origin is in the allowedOrigins array
-//   if (allowedOrigins.includes(String(origin))) {
-//     res.header('Access-Control-Allow-Origin', origin);
-//     res.header('Access-Control-Allow-Credentials', 'true');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-csrf-token');
-//   }
-//   next();
-// });
 
 app.use(express.urlencoded({limit:"50mb",extended: false}))
 app.use(express.json({limit:"50mb"}))
@@ -163,7 +150,7 @@ app.get("/classes/:schoolId", (req: Request, res: Response, next: NextFunction)=
 app.get("/class/:id", (req: Request, res: Response, next: NextFunction)=>classController.getClassById(req, res, next))
 app.delete("/class/:id", (req: Request, res: Response, next: NextFunction)=>classController.deleteclass(req, res, next))
 app.patch("/class/:id", (req: Request, res: Response, next: NextFunction)=>classController.updateclass(req, res, next))
-app.post("/class/:schoolId",verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>classController.create(req, res, next))
+app.post("/class",verifySchoolAuth, (req: Request, res: Response, next: NextFunction)=>classController.create(req, res, next))
 
 
 //Videos route
@@ -215,6 +202,19 @@ app.get("/admin/students/:schoolId", (req: Request, res: Response, next: NextFun
 app.get("/admin/teachers/:schoolId", (req: Request, res: Response, next: NextFunction)=>adminController.getTeachersBySchool(req, res))
 
 //6501938f9df5e3c94892ace2
+
+// Messages
+const messageController = Container.get(MessagesController)
+const conversationController = Container.get(ConversationsController)
+
+app.post("/conversation/create", verifyAuth, (req: Request, res: Response, next: NextFunction)=>conversationController.addConversation(req, res, next))
+
+app.post("/conversations", verifyAuth, (req: Request, res: Response, next: NextFunction)=>conversationController.getMyConversations(req, res, next))
+
+app.get("/messages/:conversationId", verifyAuth, (req: Request, res: Response, next: NextFunction)=>messageController.getAllMessagesByConversation(req, res, next))
+
+app.post("/message", verifyAuth, (req: Request, res: Response, next: NextFunction)=>messageController.sendMessage(req, res, next))
+
 
 // badges
 const badgeController = Container.get(BadgeController);

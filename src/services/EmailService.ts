@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import "reflect-metadata"
 import { Service } from "typedi";
+import { sendInviteToStudentHTML, sendMessageFromWebsiteToAdminMailHTML, sendResetPasswordHTML, sendSchoolSignUpDetailsHTML, sendTeacherSignUpDetailsHTML } from "../utils/email-template";
 
 const transporter = nodemailer.createTransport({
     service:"gmail",
@@ -40,74 +41,28 @@ class EmailService{
     }
 
     async sendSignUpDetails(email: string, password: string, productKey: any){
-        let html: any = (email: string, password: string, productKey: string)=>{
-            return `
-            <div>
-                <h3> Welcome to Curious Kids </h3>
-                <p> Here are your details </p>
-                <p>email: ${email} </p>
-                <p>product key: ${productKey} </p>
-            </div>
-        `
-        }
-        html = html(email, password, productKey)
+        let html = sendSchoolSignUpDetailsHTML(email, password, productKey)
         this.mail(email, "Emmy", "Welcome to Curious Kids", html)
     }
 
-    async sendTeacherSignUpDetails(email: string, password: string){
-        let html: any = (email: string, password: string)=>{
-            return `
-            <div>
-                <h3> Welcome to Curious Kids </h3>
-                <p> Here are your details </p>
-                <p>email: ${email} </p>
-                <p>password: ${password} </p>
-                <p>click here to <a href="https://ck-kids-dashboard.vercel.app/teachers-signin"> login </a> </p>
-            </div>
-        `
-        }
-        html = html(email, password)
+    async sendTeacherSignUpDetails(email: string, password: string, schoolName: string){
+        
+        let html = sendTeacherSignUpDetailsHTML(email, password, schoolName)
         this.mail(email, "Emmy", "Welcome to Curious Kids", html)
     }
 
-    async sendInviteToStudent(email: string, productKey: string){
-        let html: any = ()=>{
-            return `
-            <div>
-                <h3> Welcome to Curious Kids </h3>
-                <p>Hi, You've been invited to <a href="https://ck-kids-dashboard.vercel.app"> Curious Kids </a> </p>\<p>Product Key: ${productKey} </p>
-                <p>click here to <a href="https://ck-kids-dashboard.vercel.app/teachers-signin"> get started </a> </p>
-            </div>
-        `
-        }
-        html = html()
+    async sendInviteToStudent(email: string, productKey: string, schoolName: string){
+        let html = sendInviteToStudentHTML(email, productKey, schoolName)
         this.mail(email, "Emmy", "Welcome to Curious Kids", html)
     }
 
     sendMessageFromWebsiteToAdminMail(details: any){
-        let html: any = ()=>{
-            return `
-                <div>
-                    <h3> ${details.firstName} Just sent a message to you </h3>
-                    <p> user's email: ${details.email} </p>
-                    <p> Message: <b>${details.message}</b> </p>
-                </div>
-            `
-        }
-        html = html()
+        let html = sendMessageFromWebsiteToAdminMailHTML(details)
         this.mail("eolaosebikan60@gmail.com", details.firstName, "You got a message.", html)
     }
 
     sendResetPassword(email: string, token: string, type: number){
-        let html : any = ()=>{
-            return `
-                <div>
-                    <h3> Reset Password </h3>
-                    <p> Click <a href="https://ck-kids-dashboard.vercel.app/set-password?token=${token}&type=${type}" target="_blank" >here</a> to reset your password </p>
-                </div>
-            `
-        }
-        html = html()
+        let html = sendResetPasswordHTML(email, token, type)
         this.mail(email, "Emmy", "Reset Password.", html)
     }
 }

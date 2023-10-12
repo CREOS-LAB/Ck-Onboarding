@@ -3,7 +3,7 @@ import "reflect-metadata"
 import Messages from "../models/messages.model";
 
 @Service()
-export class Message{
+export class MessageServices{
     constructor(
         private readonly model = Messages
     ){}

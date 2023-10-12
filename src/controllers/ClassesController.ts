@@ -14,7 +14,7 @@ export class ClassController{
         try{
             let data = req.body;
             data.name = String(data.name).toUpperCase()
-            data.school = req.user._id
+            data.school = req.user
             let result = await this.classServices.save(data);
             resolve("Successful", result, 200, res)
         }
