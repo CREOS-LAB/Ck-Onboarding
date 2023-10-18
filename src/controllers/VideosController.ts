@@ -7,11 +7,13 @@ import { uploader } from "../utils/uploader";
 import { upload } from "../utils/cloudinary";
 import * as xlsx from "xlsx"
 import { StudentServices } from "../services/StudentsServices";
+import { CollectionServices } from "../services/CollectionServices";
 
 @Service()
 export class VideosController{
     constructor(private readonly videosServices : VideosServices,
-            private readonly studentServices: StudentServices
+            private readonly studentServices: StudentServices,
+            private readonly collectionServies: CollectionServices
         )
     {}
 

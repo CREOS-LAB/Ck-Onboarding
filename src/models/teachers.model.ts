@@ -1,5 +1,4 @@
 import mongoose, {Schema} from "mongoose"
-import Creator from "./creators.model";
 
 const schema = new Schema({
     firstName: {type: String, required: true},

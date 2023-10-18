@@ -2,10 +2,13 @@ import { Service } from "typedi";
 import "reflect-metadata"
 import Videos from "../models/videos.model";
 import { returnDescription } from "../utils/description-generator";
+import { CollectionServices } from "./CollectionServices";
 
 @Service()
 export class VideosServices{
-    constructor(private readonly videos = Videos){
+    constructor(private readonly videos = Videos,
+    private readonly collectionServices: CollectionServices
+        ){
     }
 
     async save(data: any){
@@ -28,6 +31,19 @@ export class VideosServices{
        let {description, thumbnail} = await returnDescription(data.link)
         data.description = description;
         data.cover = thumbnail
+
+        if(!data.collectionRelation){
+            let collection = {
+                title: data.name,
+                description: data.description,
+                cover: thumbnail,
+                maxAge: data.maxAge,
+                minAge: data.minAge,
+                category: data.category
+            }
+            data.collectionRelation = await this.collectionServices.save(collection)
+        }
+        
         let result = await new this.videos(data).save()
         return result
     }

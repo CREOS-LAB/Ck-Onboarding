@@ -15,4 +15,3 @@ const schema = new Schema({
 
 const Collections = mongoose.model("Collections", schema)
 export default Collections
-
