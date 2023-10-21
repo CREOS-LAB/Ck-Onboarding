@@ -58,7 +58,7 @@ class EmailService{
 
     sendMessageFromWebsiteToAdminMail(details: any){
         let html = sendMessageFromWebsiteToAdminMailHTML(details)
-        this.mail("eolaosebikan60@gmail.com", details.firstName, "You got a message.", html)
+        this.mail("sione.xy@gmail.com", details.firstName, "You got a message.", html)
     }
 
     sendResetPassword(email: string, token: string, type: number){

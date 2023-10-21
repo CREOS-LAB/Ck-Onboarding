@@ -13,7 +13,6 @@ export class SchoolsServices{
     constructor(
         private readonly model = School,
         private readonly emailService : EmailService
-
     ){}
 
     async signUp(data: any){

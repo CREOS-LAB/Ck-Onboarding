@@ -82,6 +82,7 @@ export class StudentServices{
 
     async signIn(data: LoginDto, res: Response){
         let student: any = await this.student.findOne({email: data.email})
+        
         if(!student){
             return{
                 payload: null,
