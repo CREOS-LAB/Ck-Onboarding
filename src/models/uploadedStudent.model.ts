@@ -1,5 +1,4 @@
 import mongoose, {Schema} from "mongoose"
-import Gender from "../enum/gender"
 
 
 const schema = new Schema({

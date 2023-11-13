@@ -1,29 +1,74 @@
-import mongoose, {Schema, Types} from "mongoose"
+import { prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import { IsString, IsOptional, IsNotEmpty, IsNumber, IsMongoId } from "class-validator";
+import { Collection } from "./collections.model";
+import { Student } from "./students.model";
+import { Teacher } from "./teachers.model";
+import { School } from "./schools.model";
 
-const schema = new Schema({
-    name: {type: String, required: false},
-    description: {type: String, required: false},
-    link: {type: String, required: true},
-    collectionRelation: {type: Schema.Types.ObjectId, ref: "Collections", required: false},
-    views:  [{type: Schema.Types.ObjectId, ref: "Student"}],
-    watched: [{type: Schema.Types.ObjectId, ref: "Student"}],
-    completed: [{type: Schema.Types.ObjectId, ref: "Student"}],
-    cover: {type: String, required: false, default: "https://education-ga.ketcloud.ket.org/wp-content/uploads/letslearn.jpg"},
-    maxAge: {type: Number, required: false},
-    minAge: {type: Number, required: false},
-    category: {type: String, required: false},
-    createdByTeacher: {
-        type: Schema.Types.ObjectId,
-        ref: 'Teacher',
-      },
-    createdBySchool: {
-        type: Schema.Types.ObjectId,
-        ref: 'School',
-    }
-},
-{
-    timestamps: true
-})
+export class Video {
+    @IsOptional()
+    @IsString()
+    @prop()
+    name?: string;
 
-const Videos = mongoose.model("Videos", schema)
-export default Videos
+    @IsOptional()
+    @IsString()
+    @prop()
+    description?: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @prop({ required: true })
+    link!: string;
+
+    @IsOptional()
+    @prop({ ref: () => Collection })
+    collection?: Ref<Collection>;
+
+    @IsOptional()
+    @IsMongoId({ each: true })
+    @prop({ ref: () => Student })
+    views?: Ref<Student>[];
+
+    @IsOptional()
+    @IsMongoId({ each: true })
+    @prop({ ref: () => Student, default: [] })
+    watched!: Ref<Student>[];
+
+    @IsOptional()
+    @IsMongoId({ each: true })
+    @prop({ ref: () => Student, default: [] })
+    completed!: Ref<Student>[];
+
+    @IsOptional()
+    @IsString()
+    @prop({ default: "https://education-ga.ketcloud.ket.org/wp-content/uploads/letslearn.jpg" })
+    cover?: string;
+
+    @IsOptional()
+    @IsNumber()
+    @prop()
+    maxAge?: number;
+
+    @IsOptional()
+    @IsNumber()
+    @prop()
+    minAge?: number;
+
+    @IsOptional()
+    @IsString()
+    @prop()
+    category?: string;
+
+    @IsOptional()
+    @IsMongoId()
+    @prop({ ref: () => Teacher })
+    createdByTeacher?: Ref<Teacher>;
+
+    @IsOptional()
+    @IsMongoId()
+    @prop({ ref: () => School })
+    createdBySchool?: Ref<School>;
+}
+
+export const VideoModel = getModelForClass(Video, { schemaOptions: { timestamps: true } });

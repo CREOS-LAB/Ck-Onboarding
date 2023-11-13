@@ -9,14 +9,14 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-const upload = async (data: any)=>{
-    let url;
-    await cloudinary.uploader.upload(data)
+const upload = async (data: any) => {
+  let url;
+  await cloudinary.uploader.upload(data)
     .then(resp => {
-        url = resp.secure_url;
+      url = resp.secure_url;
     })
     .catch(err => console.log(err))
-    return url;
+  return url;
 }
 
 export { cloudinary, upload };

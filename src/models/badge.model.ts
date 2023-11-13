@@ -1,19 +1,32 @@
-import mongoose, { Schema } from "mongoose";
+import { prop, getModelForClass } from "@typegoose/typegoose";
 
-const schema = new Schema({
-    cover: {type: String, required: false},
-    title: {type: String, required: true},
-    description: {type: String, required: true},
-    numberOfVideos: {type: String, required: true},
-    numberOfGems: {type: String, required: true},
-    public: {type: Boolean, default: false},
-    minAge: {type: Number, required: true},
-    maxAge: {type: Number, required: true},
-},
-{
-    timestamps: true
-})
+class Badges {
+  @prop({ required: false })
+  cover?: string;
 
-const Badges = mongoose.model("Badges", schema);
-export default Badges;
+  @prop({ required: true })
+  title!: string;
 
+  @prop({ required: true })
+  description!: string;
+
+  @prop({ required: true })
+  numberOfVideos!: string;
+
+  @prop({ required: true })
+  numberOfGems!: string;
+
+  @prop({ default: false })
+  public?: boolean;
+
+  @prop({ required: true })
+  minAge!: number;
+
+  @prop({ required: true })
+  maxAge!: number;
+
+}
+
+const BadgesModel = getModelForClass(Badges);
+
+export default BadgesModel;

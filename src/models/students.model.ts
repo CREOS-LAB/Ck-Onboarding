@@ -1,32 +1,98 @@
-import mongoose, {Schema} from "mongoose"
-import Gender from "../enum/gender"
+import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
+import { IsString, IsNotEmpty, IsOptional, IsEmail, IsNumber, IsDate } from 'class-validator';
+import { User } from './user.model';
+import { required } from 'joi';
+import { School } from './schools.model';
+import { Course } from './courses.model';
 
-const schema = new Schema({
-    fullName: {type: String, required: true},
-    profilePicture: {type: String, required: false, default: "https://static.vecteezy.com/system/resources/previews/013/042/571/original/default-avatar-profile-icon-social-media-user-photo-in-flat-style-vector.jpg"},
-    gender: {type: String, required: false },
-    email: {type: String, required: true, unique: true},
-    productKey: {type:String, required: true},
-    school: {type: Schema.Types.ObjectId, ref:"School"},
-    password: {type: String, required: true},
-    dob: {type: Date, required: false},
-    gem: {type: Number, default: 0},
-    courses: [{type: Schema.Types.ObjectId, ref: "Course"}],
-    hoursSpent: {type: Number},
-    stage: {type: String},
-    badges: {type: String},
-    achievement: {type: String},
-    streak: {type: Number, default: 0},
-    age: {type: Number},
-    last_logged_in: {type: Date},
-    completedCourses: {type: Number, default: 0},
-    resetPasswordToken: {type: String},
-    resetTokenExpires: {type: Date}
-    },
-    {
-        timestamps: true
-    }
-)
 
-const Student = mongoose.model("Student", schema)
-export default Student
+export class Student extends User {
+
+  @IsOptional()
+  @IsString()
+  @prop({ default: 'https://static.vecteezy.com/system/resources/previews/013/042/571/original/default-avatar-profile-icon-social-media-user-photo-in-flat-style-vector.jpg' })
+  profilePicture?: string;
+
+  @IsOptional()
+  @IsString()
+  @prop()
+  gender?: string;
+
+
+  @IsNotEmpty()
+  @IsString()
+  @prop({ required: true })
+  productKey?: string;
+
+  @IsOptional()
+  @prop({ required: false, ref: () => School })
+  school?: Ref<School>;
+
+  @IsOptional()
+  @IsDate()
+  @prop()
+  dob?: Date;
+
+  @IsOptional()
+  @IsNumber()
+  @prop({ default: 0 })
+  gem?: number;
+
+  @IsOptional()
+  @prop({ ref: () => Course })
+  courses?: Ref<Course>[];
+
+  @IsOptional()
+  @IsNumber()
+  @prop()
+  hoursSpent?: number;
+
+  @IsOptional()
+  @IsString()
+  @prop()
+  stage?: string;
+
+  @IsOptional()
+  @IsString()
+  @prop()
+  badges?: string;
+
+  @IsOptional()
+  @IsString()
+  @prop()
+  achievement?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @prop({ default: 0 })
+  streak?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @prop()
+  age?: number;
+
+  @IsOptional()
+  @IsDate()
+  @prop()
+  last_logged_in?: Date;
+
+  @IsOptional()
+  @IsNumber()
+  @prop({ default: 0 })
+  completedCourses?: number;
+
+  @IsOptional()
+  @IsString()
+  @prop()
+  resetPasswordToken?: string;
+
+  @IsOptional()
+  @IsDate()
+  @prop()
+  resetTokenExpires?: Date;
+
+
+}
+
+export const StudentModel = getModelForClass(Student, { schemaOptions: { timestamps: true } });

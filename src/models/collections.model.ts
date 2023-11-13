@@ -1,17 +1,51 @@
-import mongoose, {Schema} from "mongoose"
+import { prop, getModelForClass } from '@typegoose/typegoose';
+import { IsString, IsNumber, IsOptional } from 'class-validator';
+import mongoose from 'mongoose';
+import { Class, ClassModel } from './classes.model';
 
-const schema = new Schema({
-    title: {type: String, required: true},
-    description: {type: String, required: true},
-    cover: {type: String, required: true},
-    class: {type: Schema.Types.ObjectId, required: false},
-    category: {type: String, required: false},
-    maxAge: {type: Number, required: true},
-    minAge: {type: Number, required: true}
-},
-{
-    timestamps: true
-})
+export class Collection {
+    @IsString()
+    @prop({ required: true })
+    title?: string;
 
-const Collections = mongoose.model("Collections", schema)
-export default Collections
+    @IsString()
+    @prop({ required: true })
+    description?: string;
+
+    @IsString()
+    @prop({ required: true })
+    cover?: string;
+
+    @IsOptional()
+    @prop({ ref: () => ClassModel })
+    class?: string;
+
+    @IsOptional()
+    @IsString()
+    @prop()
+    category?: string;
+
+    @IsNumber()
+    @prop({ required: true })
+    maxAge?: number;
+
+    @IsNumber()
+    @prop({ required: true })
+    minAge?: number;
+
+
+    constructor(v: Partial<Collection>) {
+        if (v) {
+            Object.assign(this, v)
+        }
+    }
+}
+
+export const CollectionModel = getModelForClass(Collection, {
+    schemaOptions: {
+        timestamps: true,
+
+    }
+});
+
+

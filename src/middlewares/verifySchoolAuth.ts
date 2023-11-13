@@ -1,30 +1,39 @@
+//@ts-nocheck
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import Student from "../models/students.model";
-import School from "../models/schools.model";
+import { AuthUser } from "../passport/types";
+import { HttpStatusCode } from "axios";
+import { SchoolModel } from "../models/schools.model";
+
 
 const jwtSecret: string = String(process.env.JWT_SECRET);
-const verifySchoolAuth = async (req: any, res: Response, next: NextFunction)=>{
 
-    const {authorization} = req.headers;
-    let token = req.cookies.token || authorization?.replace("Bearer ", "")
-    
-    if (!token){
-        return res.status(403).json({message: 'Unauthorized'})
+const verifySchoolAuth = async (req: Request, res: Response, next: NextFunction) => {
+
+    const { authorization } = req.headers;
+    console.log(req.url)
+    let token = req.cookies.auth || authorization?.replace("Bearer ", "")
+
+    console.log(token)
+
+    if (!token) {
+        console.log("Entered here")
+        return res.status(HttpStatusCode.Unauthorized).json({ message: 'Unauthorized' })
     }
-    
-    try{
-        req.user = jwt.verify(token, jwtSecret)
-        let {_id} = req.user;
-        let user = await School.findById(_id);
-        if(!user){
-            return res.status(404).json({message: 'School Not Found'})
+
+    try {
+        const jwtDecodedUser = jwt.verify(token, jwtSecret)
+        let { id } = jwtDecodedUser as AuthUser;
+        let user = await SchoolModel.findById(id);
+        console.log(user)
+        if (!user) {
+            return res.status(404).json({ message: 'School Not Found' })
         }
         req.user = user
         next()
     }
-    catch(err: any){
-        return res.status(401).json({message: "Unauthorized Token", error: err.message})
+    catch (err: any) {
+        return res.status(HttpStatusCode.Unauthorized).json({ message: "Unauthorized Token", error: err.message })
     }
 }
 

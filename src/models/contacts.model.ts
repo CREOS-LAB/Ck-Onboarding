@@ -1,11 +1,19 @@
-import mongoose, { Schema } from "mongoose";
+import { prop, getModelForClass } from "@typegoose/typegoose";
 
-const schema = new Schema({
-    firstName: {type: String},
-    lastName: {type: String},
-    email: {type: String},
-    message: {type: String},
-})
+export class Contact {
+  @prop()
+  firstName?: string;
 
-const Contact = mongoose.model("Contact", schema)
-export default Contact
+  @prop()
+  lastName?: string;
+
+  @prop()
+  email?: string;
+
+  @prop()
+  message?: string;
+}
+
+export const ContactModel = getModelForClass(Contact);
+
+

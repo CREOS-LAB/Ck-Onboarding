@@ -1,12 +1,21 @@
-import mongoose, {Schema} from "mongoose"
+import { prop, getModelForClass } from '@typegoose/typegoose';
+import mongoose from 'mongoose';
 
-const schema = new Schema({
-    name: {type: String},
-    school: {type: Schema.Types.ObjectId, ref: "School"}
-},
-{
-    timestamps: true
-})
+export class Class {
+    @prop()
+    name?: string;
 
-const Classes = mongoose.model("Classes", schema)
-export default Classes
+    @prop({ ref: () => 'School' }) // Reference to the "School" model
+    school?: mongoose.Types.ObjectId;
+
+    constructor(v: Partial<Class>) {
+        if (v) {
+            Object.assign(this, v)
+        }
+    }
+}
+
+export const ClassModel = getModelForClass(Class, {
+    schemaOptions: {
+    }
+});

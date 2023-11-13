@@ -1,19 +1,25 @@
-import mongoose, {Schema} from "mongoose"
-import Gender from "../enum/gender"
+import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
+import { IsString, IsNotEmpty, IsOptional, IsEmail, IsDate, IsEmpty } from 'class-validator';
+import { User } from './user.model';
+import { generateProductkey } from '../utils/generateToken';
+import { Student } from './students.model';
 
-const schema = new Schema({
-        schoolName: {type: String, required: true},
-        email: {type: String, required: true, unique: true},
-        productKey: {type: String},
-        password: {type: String, required: true},
-        profilePicture: {type: String, required: false, default: "https://static.vecteezy.com/system/resources/previews/013/042/571/original/default-avatar-profile-icon-social-media-user-photo-in-flat-style-vector.jpg"},
-        resetPasswordToken: {type: String},
-        resetTokenExpires: {type: Date}
-    },
-    {
-        timestamps: true
-    }
-)
+export class School extends User {
 
-const School = mongoose.model("School", schema)
-export default School
+    @IsEmpty()
+    @prop({ required: true, default: () => generateProductkey() })
+    productKey?: string;
+
+
+    @prop({ required: true, default: [] })
+    students?: Ref<Student>[];
+
+    @prop()
+    resetPasswordToken?: string;
+
+
+    @prop()
+    resetTokenExpires?: Date;
+}
+
+export const SchoolModel = getModelForClass(School, { schemaOptions: { timestamps: true, } });
