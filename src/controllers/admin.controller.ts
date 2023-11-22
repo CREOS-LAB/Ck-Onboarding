@@ -10,51 +10,51 @@ import { VideosServices } from "../services/video.service";
 import { SchoolsServices } from "../services/school.service";
 
 @Service()
-export class AdminController{
+export class AdminController {
     constructor(
-        private readonly adminServices : AdminService,
+        private readonly adminServices: AdminService,
         private readonly teachersServices: TeacherServices,
         private readonly studentServices: StudentServices,
         private readonly videoServices: VideosServices,
         private readonly schoolServices: SchoolsServices
-    ){}
+    ) { }
 
-    
-    async signUp(req: Request, res: Response){
-        try{
+
+    async signUp(req: Request, res: Response) {
+        try {
             const data = req.body;
             let result: ResponseInterface = await this.adminServices.signUp(data);
             resolve(result.message, result.payload, 200, res)
         }
-        catch(err: any){
+        catch (err: any) {
             reject(err.message, 400, res)
         }
     }
 
-    async signIn(req: Request, res: Response){
-        try{
+    async signIn(req: Request, res: Response) {
+        try {
             const data = req.body;
             let result: ResponseInterface = await this.adminServices.signIn(data, res);
             resolve(result.message, result.payload, result.status, res)
         }
-        catch(err: any){
+        catch (err: any) {
             reject(err.message, 400, res)
         }
     }
 
-    async getSchoolById(req: Request, res: Response, next: NextFunction){
-        try{
-            let {id} = req.params;
+    async getSchoolById(req: Request, res: Response, next: NextFunction) {
+        try {
+            let { id } = req.params;
             let result = await this.adminServices.getAdminById(id)
             resolve("Successful", result, 200, res)
         }
-        catch(err: any){
+        catch (err: any) {
             reject(err.message, 400, res)
         }
     }
 
-    async getDetails(req: Request, res: Response, next: NextFunction){
-        try{
+    async getDetails(req: Request, res: Response, next: NextFunction) {
+        try {
             let result;
             let schools: any = await this.schoolServices.getAll()
             let students: any = await this.studentServices.getAllStudents(null)
@@ -70,29 +70,29 @@ export class AdminController{
 
             resolve("Successful", result, 200, res)
         }
-        catch(err: any){
+        catch (err: any) {
             reject(err.message, 400, res)
         }
     }
 
-    async getStudentsBySchool(req: Request, res: Response){
-        try{
-            const {schoolId} = req.params;
+    async getStudentsBySchool(req: Request, res: Response) {
+        try {
+            const { schoolId } = req.params;
             let result = await this.studentServices.getAllStudents(schoolId)
             resolve("Successful", result, 200, res)
         }
-        catch(err: any){
+        catch (err: any) {
             reject(err.message, 400, res)
         }
     }
 
-    async getTeachersBySchool(req: Request, res: Response){
-        try{
-            const {schoolId} = req.params;
+    async getTeachersBySchool(req: Request, res: Response) {
+        try {
+            const { schoolId } = req.params;
             let result = await this.teachersServices.getAllBySchool(schoolId)
             resolve("Successful", result, 200, res)
         }
-        catch(err: any){
+        catch (err: any) {
             reject(err.message, 400, res)
         }
     }

@@ -2,7 +2,7 @@ import multer from "multer"
 import * as path from "path"
 
 const excelStorage = multer.diskStorage({
-    destination: '../uploads/excel/', // Set your destination folder
+    destination: './uploads/excel/', // Set your destination folder
     filename: (req, file, callback) => {
         // Extract the file extension from the original filename
         const fileExt = path.extname(file.originalname);
@@ -16,7 +16,7 @@ const excelStorage = multer.diskStorage({
 });
 
 const imageStorage = multer.diskStorage({
-    destination: '../uploads/images/', // Set your destination folder
+    destination: './uploads/images/', // Set your destination folder
     filename: (req, file, callback) => {
         // Extract the file extension from the original filename
         const fileExt = path.extname(file.originalname);

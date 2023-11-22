@@ -1,59 +1,40 @@
 import { Service } from "typedi";
 import { Course, CourseModel } from "../models/courses.model";
-import { ErrorResponse, FutureErrorOrSuccess, SuccessResponse } from "../response";
+import { ErrorResponse, PromiseErrorOrSuccess, SuccessResponse } from "../response";
 import * as E from "fp-ts/Either"
 import { HttpStatusCode } from "axios";
 import { CreateCourseDTO } from "../dtos/course.dto";
+import { Try } from "../utils/functional";
+import { bulkCourseUploadQueue } from "../bull";
 
 //TODO get courses specifically school using authentication data
 
 @Service()
 export class CourseService {
-    async getAllCourses(limit?: number, page?: number): FutureErrorOrSuccess<Course[]> {
-        try {
-            return E.right(SuccessResponse({
-                result: await CourseModel.find({}, {}, { limit, page }),
-                message: "Successfully gotten courses"
-            }))
-        } catch (e: any) {
-            return E.left(ErrorResponse({
-                message: e.message || "Error fecthing courses",
-                status: HttpStatusCode.InternalServerError
-            }))
-        }
+    async getAllCourses(limit?: number, page?: number): PromiseErrorOrSuccess<Course[]> {
+        return Try(async () => {
+            const courses = await CourseModel.find({})
+            return courses;
+        })
     }
 
     //FIXME Add the school that uploaded the data to the parameters
 
-    async createCourse(course: CreateCourseDTO): FutureErrorOrSuccess<Course> {
-        try {
+    async createCourse(course: CreateCourseDTO): PromiseErrorOrSuccess<Course> {
+        return Try(async () => {
             const result = await CourseModel.create(course);
-            return E.right(SuccessResponse({
-                message: "Successfully created courses",
-                result,
-                status: HttpStatusCode.Created
-            }))
-
-        } catch (e: any) {
-            return E.left(ErrorResponse({
-                status: HttpStatusCode.InternalServerError,
-                message: e.message || "Error fetching courses from the internet"
-            }))
-        }
+            return result;
+        }, {
+            error: "Unable to create a new course"
+        })
 
     }
 
-    async bulkCreateCourse(): FutureErrorOrSuccess<any> {
-        try {
-            return E.right(SuccessResponse({
-                message: "We are processing your bulk upload",
-                status: 200
-            }))
-        }
-        catch (e) {
-            return E.left(ErrorResponse({
-                message: "Unable to process your bulk file"
-            }))
-        }
+    async bulkCreateCourse(file: string): PromiseErrorOrSuccess<any> {
+        return Try(async () => {
+                await bulkCourseUploadQueue.add({
+                    filename: file
+                })
+        }, { success: "Your courses are uploading, wait for your courses to upload" })
     }
 }

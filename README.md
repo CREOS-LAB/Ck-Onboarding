@@ -65,6 +65,7 @@ The request handling process involves routing, controllers, and services. Here's
 
 7. **Background Processing:**
    - The [bull](bull) file is responsible for spawning threaded processes to run intensive tasks.
+   - If you don't have a redis server use docker to spawn one server for testing
 
 8. **Environment Configuration:**
    - Configuration examples are provided in the [.env.example](.env.example) file. Developers can use this file as a template for their own `.env` file, ensuring all necessary configurations are present.

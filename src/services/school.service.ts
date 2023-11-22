@@ -6,7 +6,7 @@ import EmailService from "./email.service";
 import { upload } from "../utils/cloudinary";
 import * as E from 'fp-ts/Either';
 import { MongooseError } from "mongoose";
-import { ErrorResponse, FutureErrorOrSuccess, SuccessResponse } from "../response";
+import { ErrorResponse, PromiseErrorOrSuccess, SuccessResponse } from "../response";
 import { HttpStatusCode } from "axios";
 import { generateUserToken } from "../utils/generateToken";
 import { AuthUser, UserType } from "../passport/types";
@@ -15,6 +15,7 @@ import { UploadedStudentServices } from "./uplodaded_students.service";
 import { StudentServices } from "./student.service";
 import { TeacherServices } from "./teacher.service";
 import { infoLogger } from "../logger";
+import { Try } from "../utils/functional";
 
 
 @Service()
@@ -28,7 +29,7 @@ export class SchoolsServices {
     ) { }
 
 
-    signUp = async (school: Partial<School>): FutureErrorOrSuccess<School> => {
+    signUp = async (school: Partial<School>): PromiseErrorOrSuccess<School> => {
         try {
             const schoolExists = await this.model.findOne({
                 $or: [{ email: school.email }, { name: school.name }]
@@ -86,7 +87,7 @@ export class SchoolsServices {
         }
     }
 
-    signIn = async (school: Partial<School>): FutureErrorOrSuccess<School> => {
+    signIn = async (school: Partial<School>): PromiseErrorOrSuccess<School> => {
         try {
 
 
@@ -143,7 +144,7 @@ export class SchoolsServices {
         }
     }
 
-    getLoggedInSchool = async (user: AuthUser): FutureErrorOrSuccess<School> => {
+    getLoggedInSchool = async (user: AuthUser): PromiseErrorOrSuccess<School> => {
         try {
 
 
@@ -168,27 +169,19 @@ export class SchoolsServices {
         }
     }
 
-    getSchoolDetails = async (user: AuthUser): FutureErrorOrSuccess<any> => {
-        try {
+    getSchoolDetails = async (user: AuthUser): PromiseErrorOrSuccess<any> => {
+        return Try(async () => {
             const school = user;
             let allUploadedStudents: number = 0;
             let totalStudents: number = 0;
             let totalTeachers: number = 0;
             let result = { allUploadedStudents, totalStudents, totalTeachers }
-            return E.right(SuccessResponse({
-                result,
-                message: "Successfully fetched school details",
-            }))
-        }
-        catch (err: any) {
-            return E.left(ErrorResponse({
-                message: err.message || "Couldn't fetch school details",
-                status: HttpStatusCode.InternalServerError
-            }))
-        }
+            return result
+        }, {error: "Unable to fecth school details"})
+
     }
 
-    signInGoogle = async (user: AuthUser, err?: any): FutureErrorOrSuccess<any> => {
+    signInGoogle = async (user: AuthUser, err?: any): PromiseErrorOrSuccess<any> => {
         try {
             if (err) {
                 return E.left(

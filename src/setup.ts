@@ -16,7 +16,8 @@ import { createSession } from "better-sse"
 import { ErrorResponseInterface } from "./response"
 import { Request, Response, NextFunction } from "express"
 import { errorLogger } from "./logger"
-import { setupRoutes } from "./routes/setup_routes"
+import { studentsRouter, teachersRouter, authRouter, schoolsRouter, collectionsRouter, classesRouter, videosRouter, contactRouter, commentsRouter, adminRouter, badgeRouter, newsletterRouter, courseRouter, notificationRouter, uploadRouter } from "./routes"
+
 
 export function setup() {
     const app = express()
@@ -69,7 +70,24 @@ export function setup() {
         initModels()
     });
 
-    setupRoutes(app)
+
+
+    app.use("/students", studentsRouter)
+    app.use("/teachers", teachersRouter)
+    app.use("/schools", schoolsRouter)
+    app.use("/collections", collectionsRouter)
+    app.use("/classes", classesRouter)
+    app.use("/videos", videosRouter)
+    app.use("/contact", contactRouter)
+    app.use("/comments", commentsRouter);
+    app.use("/admin", adminRouter)
+    app.use("/badges", badgeRouter)
+    app.use("/newsletter", newsletterRouter)
+    app.use("/notifications", notificationRouter)
+    app.use("/courses", courseRouter)
+    app.use(uploadRouter)
+
+    console.log('Finished setting up routes')
 
 
     return app

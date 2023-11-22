@@ -3,7 +3,7 @@ import "reflect-metadata"
 import { Video, VideoModel } from "../models/videos.model";
 import { returnDescription } from "../utils/description-generator";
 import { CollectionServices } from "./collection.service";
-import { ErrorResponse, FutureErrorOrSuccess, SuccessResponse } from "../response";
+import { ErrorResponse, PromiseErrorOrSuccess, SuccessResponse } from "../response";
 import * as E from "fp-ts/Either"
 
 @Service()
@@ -13,7 +13,7 @@ export class VideosServices {
     ) {
     }
 
-    async createVideo(video: Partial<Video>): FutureErrorOrSuccess<Video> {
+    async createVideo(video: Partial<Video>): PromiseErrorOrSuccess<Video> {
         try {
             const result = await this.videos.create(video)
             return E.right(
@@ -31,7 +31,7 @@ export class VideosServices {
     }
 
 
-    async getVideos(): FutureErrorOrSuccess<Array<Video>> {
+    async getVideos(): PromiseErrorOrSuccess<Array<Video>> {
         try {
             const result = await this.videos.find()
             return E.right(SuccessResponse({

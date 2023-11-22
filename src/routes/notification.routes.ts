@@ -6,7 +6,7 @@ export const notificationRouter = Router()
 
 const notificationController = Container.get(NotificationController)
 
-notificationRouter.post("/user", notificationController.getNotificationsOfUser)
+notificationRouter.get("/", notificationController.getNotificationsOfUser)
 
 
 
